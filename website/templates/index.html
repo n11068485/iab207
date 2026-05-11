@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block title %}Professional Networking Events{% endblock %}
+{% block nav_events %}active{% endblock %}
+
+{% block header %}
+<section class="hero-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7 col-xl-6">
+        <p class="hero-eyebrow">Career Events for Students</p>
+        <h1 class="hero-title">Where ambition<br>finds its room.</h1>
+        <p class="hero-sub">
+          Discover industry conferences, networking dinners, career exhibitions
+          and society events &mdash; curated for students and early-career professionals.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="filter-bar">
+  <div class="container">
+    <div class="row g-2 align-items-end">
+      <div class="col-6 col-md-3">
+        <label class="filter-label" for="filterSector">Sector</label>
+        <select class="form-select form-select-sm" id="filterSector">
+          <option>All Sectors</option>
+          <option>Technology</option>
+          <option>Finance &amp; Banking</option>
+          <option>Engineering</option>
+          <option>Healthcare</option>
+          <option>Law</option>
+          <option>Creative Industries</option>
+          <option>Consulting</option>
+        </select>
+      </div>
+      <div class="col-6 col-md-3">
+        <label class="filter-label" for="filterSubsector">Subsector</label>
+        <select class="form-select form-select-sm" id="filterSubsector">
+          <option>All Subsectors</option>
+          <option>Software Engineering</option>
+          <option>Data Science</option>
+          <option>Cybersecurity</option>
+          <option>Investment Banking</option>
+          <option>Corporate Law</option>
+        </select>
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="filter-label" for="filterSort">Sort By</label>
+        <select class="form-select form-select-sm" id="filterSort">
+          <option>Soonest First</option>
+          <option>Attendance: High–Low</option>
+          <option>Price: Low–High</option>
+          <option>Price: High–Low</option>
+        </select>
+      </div>
+      <div class="col-6 col-md-4">
+        <label class="filter-label" for="filterSearch">Search</label>
+        <div class="input-group input-group-sm">
+          <input type="text" class="form-control" id="filterSearch" placeholder="Event name, organiser…">
+          <button class="btn btn-accent" type="button" aria-label="Search">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<main class="py-5">
+  <div class="container">
+    <div class="mb-4">
+      <h2 class="section-heading">Upcoming Events</h2>
+      <p class="section-sub mb-0">Showing all statuses &mdash; 6 events</p>
+    </div>
+    <div class="row g-4">
+
+      <div class="col-sm-6 col-lg-4">
+        <a href="{{ url_for('main.event_detail') }}" class="event-card-link h-100">
+          <div class="event-card">
+            <div class="event-img-wrap">
+              <img src="{{ url_for('static', filename='img/tech-summit.jpeg') }}" alt="QUT Tech Industry Summit 2025">
+              <span class="status-badge open">Open</span>
+              <span class="sector-tag">Technology</span>
+            </div>
+            <div class="event-body">
+              <p class="event-date"><i class="bi bi-calendar3"></i> Fri 2 May 2025 &middot; Brisbane</p>
+              <h5 class="event-title">QUT Tech Industry Summit 2025</h5>
+              <p class="event-desc">Meet hiring managers and engineers from 40+ Queensland tech companies. Panel discussions, speed networking and grad program info sessions.</p>
+              <div class="event-meta">
+                <span><i class="bi bi-people-fill"></i> 320 attending</span>
+                <span><i class="bi bi-ticket-perforated"></i> Free</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-sm-6 col-lg-4">
+        <a href="{{ url_for('main.event_detail') }}" class="event-card-link h-100">
+          <div class="event-card">
+            <div class="event-img-wrap">
+              <img src="{{ url_for('static', filename='img/finance-dinner.jpeg') }}" alt="Graduate Finance Networking Dinner">
+              <span class="status-badge open">Open</span>
+              <span class="sector-tag">Finance</span>
+            </div>
+            <div class="event-body">
+              <p class="event-date"><i class="bi bi-calendar3"></i> Thu 8 May 2025 &middot; Sydney</p>
+              <h5 class="event-title">Graduate Finance Networking Dinner</h5>
+              <p class="event-desc">A seated dinner for penultimate and final-year students pursuing careers in investment banking, funds management and financial advisory.</p>
+              <div class="event-meta">
+                <span><i class="bi bi-people-fill"></i> 80 attending</span>
+                <span><i class="bi bi-ticket-perforated"></i> $25</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-sm-6 col-lg-4">
+        <a href="{{ url_for('main.event_detail') }}" class="event-card-link h-100">
+          <div class="event-card">
+            <div class="event-img-wrap">
+              <img src="{{ url_for('static', filename='img/career-expo.jpeg') }}" alt="National Graduate Career Expo">
+              <span class="status-badge sold-out">Sold Out</span>
+              <span class="sector-tag">All Sectors</span>
+            </div>
+            <div class="event-body">
+              <p class="event-date"><i class="bi bi-calendar3"></i> Sat 10 May 2025 &middot; Melbourne</p>
+              <h5 class="event-title">National Graduate Career Expo</h5>
+              <p class="event-desc">Australia's largest graduate career exhibition with 120+ employers, CV clinics, mock interviews and on-the-day offer rounds.</p>
+              <div class="event-meta">
+                <span><i class="bi bi-people-fill"></i> 1,200 attending</span>
+                <span><i class="bi bi-ticket-perforated"></i> $10</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-sm-6 col-lg-4">
+        <a href="{{ url_for('main.event_detail') }}" class="event-card-link h-100">
+          <div class="event-card">
+            <div class="event-img-wrap">
+              <img src="{{ url_for('static', filename='img/law-mixer.jpeg') }}" alt="QLS Student Law Society Mixer">
+              <span class="status-badge open">Open</span>
+              <span class="sector-tag">Law</span>
+            </div>
+            <div class="event-body">
+              <p class="event-date"><i class="bi bi-calendar3"></i> Wed 14 May 2025 &middot; Brisbane</p>
+              <h5 class="event-title">QLS Student Law Society Mixer</h5>
+              <p class="event-desc">Informal drinks and networking with solicitors, barristers and legal professionals, hosted by the Queensland Law Society student chapter.</p>
+              <div class="event-meta">
+                <span><i class="bi bi-people-fill"></i> 150 attending</span>
+                <span><i class="bi bi-ticket-perforated"></i> Free</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-sm-6 col-lg-4">
+        <a href="{{ url_for('main.event_detail') }}" class="event-card-link h-100">
+          <div class="event-card">
+            <div class="event-img-wrap">
+              <img src="{{ url_for('static', filename='img/engineering-conf.jpeg') }}" alt="Engineers Australia Student Conference">
+              <span class="status-badge inactive">Inactive</span>
+              <span class="sector-tag">Engineering</span>
+            </div>
+            <div class="event-body">
+              <p class="event-date"><i class="bi bi-calendar3"></i> Fri 16 May 2025 &middot; Brisbane</p>
+              <h5 class="event-title">Engineers Australia Student Conference</h5>
+              <p class="event-desc">A full-day conference covering civil, mechanical and electrical disciplines, with keynotes from industry leaders and a graduate recruitment fair.</p>
+              <div class="event-meta">
+                <span><i class="bi bi-people-fill"></i> 420 attending</span>
+                <span><i class="bi bi-ticket-perforated"></i> $15</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-sm-6 col-lg-4">
+        <a href="{{ url_for('main.event_detail') }}" class="event-card-link h-100">
+          <div class="event-card">
+            <div class="event-img-wrap">
+              <img src="{{ url_for('static', filename='img/consulting-night.jpeg') }}" alt="Big Four Consulting Case Night">
+              <span class="status-badge cancelled">Cancelled</span>
+              <span class="sector-tag">Consulting</span>
+            </div>
+            <div class="event-body">
+              <p class="event-date"><i class="bi bi-calendar3"></i> Mon 19 May 2025 &middot; Sydney</p>
+              <h5 class="event-title">Big Four Consulting Case Night</h5>
+              <p class="event-desc">Practice live case interviews with consultants from Deloitte, PwC, EY and KPMG. Feedback sessions and networking drinks to follow.</p>
+              <div class="event-meta">
+                <span><i class="bi bi-people-fill"></i> 200 attending</span>
+                <span><i class="bi bi-ticket-perforated"></i> $20</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,546 @@
+/* =====================================================
+   NexusNet — main stylesheet
+   last touched: who knows. probably late.
+   ===================================================== */
+
+:root {
+  --cream:     #f4f1eb;
+  --ink:       #1c1c2e;
+  --ink-soft:  #4a4a6a;
+  --accent:    #c84b31;
+  --accent-dk: #a33a24;
+  --border:    #ddd8cc;
+  --card-bg:   #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+
+/* --------------------------------------------------
+   navbar
+   "I am fluent in six million forms of navigation."
+   -------------------------------------------------- */
+
+.navbar {
+  background: var(--ink);
+  padding: 0.75rem 0;
+  border-bottom: 3px solid var(--accent);
+}
+
+.navbar-brand {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.55rem;
+  color: #fff !important;
+  letter-spacing: -0.5px;
+}
+.navbar-brand span { color: var(--accent); }
+
+.navbar .nav-link {
+  color: rgba(255,255,255,0.7) !important;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.4rem 0.9rem;
+  transition: color 0.2s;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link.active { color: #fff !important; }
+
+.navbar-toggler {
+  border-color: rgba(255,255,255,0.3);
+}
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,0.7%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+
+/* --------------------------------------------------
+   buttons — two flavours
+   -------------------------------------------------- */
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff !important;
+  border: none;
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 0.42rem 1.1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s;
+  display: inline-block;
+}
+.btn-accent:hover { background: var(--accent-dk); }
+
+.btn-outline-light-custom {
+  background: transparent;
+  color: rgba(255,255,255,0.8) !important;
+  border: 1px solid rgba(255,255,255,0.35);
+  font-weight: 500;
+  font-size: 0.82rem;
+  padding: 0.42rem 1.1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-block;
+}
+.btn-outline-light-custom:hover {
+  border-color: #fff;
+  color: #fff !important;
+}
+
+
+/* --------------------------------------------------
+   hero — front page only
+   -------------------------------------------------- */
+
+.hero-section {
+  background: var(--ink);
+  padding: 4.5rem 0 3.5rem;
+}
+
+.hero-eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.hero-sub {
+  color: rgba(255,255,255,0.65);
+  font-size: 1rem;
+  max-width: 520px;
+}
+
+
+/* --------------------------------------------------
+   filter bar
+   -------------------------------------------------- */
+
+.filter-bar {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+}
+
+.filter-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.filter-bar .form-select,
+.filter-bar .form-control {
+  border-color: var(--border);
+  font-size: 0.875rem;
+  background-color: var(--cream);
+}
+
+.filter-bar .form-select:focus,
+.filter-bar .form-control:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(200,75,49,0.12);
+}
+
+
+/* --------------------------------------------------
+   event cards
+   -------------------------------------------------- */
+
+.event-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.event-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  height: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.event-img-wrap {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.event-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.event-card:hover .event-img-wrap img {
+  transform: scale(1.04);
+}
+
+
+/* status badges — keep these readable at a glance */
+
+.status-badge {
+  position: absolute;
+  top: 10px; left: 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 3px 9px;
+  border-radius: 3px;
+}
+
+.status-badge.open      { background: #e6f4ee; color: #1a7a4a; }
+.status-badge.sold-out  { background: #fdf0e0; color: #8b4000; }
+.status-badge.cancelled { background: #fde8e8; color: #8b1a1a; }
+.status-badge.inactive  { background: #f0f0f0; color: #555555; }
+
+.sector-tag {
+  position: absolute;
+  top: 10px; right: 10px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  background: rgba(28,28,46,0.75);
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 3px;
+  backdrop-filter: blur(4px);
+}
+
+.event-body {
+  padding: 1.1rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.event-date {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.3rem;
+}
+
+.event-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.event-desc {
+  font-size: 0.845rem;
+  color: var(--ink-soft);
+  flex: 1;
+  margin-bottom: 0.9rem;
+}
+
+.event-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+  margin-top: auto;
+}
+.event-meta i { margin-right: 4px; }
+
+
+/* --------------------------------------------------
+   section headings (reusable)
+   -------------------------------------------------- */
+
+.section-heading {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.6rem;
+  margin-bottom: 0.25rem;
+}
+
+.section-sub {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  margin-bottom: 1.75rem;
+}
+
+
+/* --------------------------------------------------
+   page header strip (inner pages)
+   -------------------------------------------------- */
+
+.page-header {
+  background: var(--ink);
+  padding: 2.5rem 0 2rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 3px solid var(--accent);
+}
+
+.page-header h1 {
+  font-family: 'DM Serif Display', serif;
+  color: #fff;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  margin-bottom: 0.25rem;
+}
+
+.page-header p {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+
+/* --------------------------------------------------
+   footer
+   -------------------------------------------------- */
+
+.site-footer {
+  background: var(--ink);
+  color: rgba(255,255,255,0.55);
+  padding: 1.75rem 0;
+  margin-top: 4rem;
+  font-size: 0.85rem;
+  border-top: 3px solid var(--accent);
+}
+
+.footer-brand {
+  font-family: 'DM Serif Display', serif;
+  color: #fff;
+  font-size: 1.1rem;
+  margin-right: 0.75rem;
+}
+
+.footer-link {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  margin-left: 1.25rem;
+  font-size: 0.83rem;
+  transition: color 0.2s;
+}
+.footer-link:hover { color: #fff; }
+
+
+/* --------------------------------------------------
+   event detail page
+   -------------------------------------------------- */
+
+.detail-hero-img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.detail-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.detail-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.detail-meta-row span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* the sidebar booking card */
+.info-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.info-card-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+}
+
+.ticket-qty input { max-width: 80px; }
+
+
+/* --------------------------------------------------
+   comments
+   -------------------------------------------------- */
+
+.comment-item {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.85rem;
+}
+
+.comment-author {
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 2px;
+}
+
+.comment-time {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+}
+
+.comment-text { font-size: 0.9rem; }
+
+
+/* --------------------------------------------------
+   forms (create event page)
+   -------------------------------------------------- */
+
+.form-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.form-section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+}
+
+.form-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(200,75,49,0.12);
+}
+
+
+/* --------------------------------------------------
+   booking history
+   -------------------------------------------------- */
+
+.booking-row {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  transition: box-shadow 0.2s;
+}
+.booking-row:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+/* image fills the left column at any height */
+.booking-img {
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+.booking-id {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+
+.booking-event-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 0.35rem;
+}
+
+.booking-detail {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-bottom: 3px;
+}
+
+.booking-status {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 3px 9px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+
+/* --------------------------------------------------
+   acknowledgement of country banner
+   (appears at top of every page)
+   -------------------------------------------------- */
+
+.aoc-banner {
+  background: #2e2b45;
+  color: rgba(255,255,255,0.82);
+  font-size: 0.82rem;
+  padding: 0.6rem 0;
+  text-align: center;
+  line-height: 1.5;
+}
+.aoc-banner strong { color: #fff; }

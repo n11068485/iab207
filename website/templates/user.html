@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% from "bootstrap5/form.html" import render_form %}
+
+{% block title %}{{ heading }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="page-header mb-4">
+        <h4>{{ heading }}</h4>
+      </div>
+      {{ render_form(form) }}
+    </div>
+  </div>
+
+  {% if heading == 'Login' %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <p>New user? <a href="{{ url_for('auth.register') }}">Click here</a> to register.</p>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

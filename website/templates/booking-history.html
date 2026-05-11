@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}My Bookings{% endblock %}
+{% block nav_bookings %}active{% endblock %}
+
+{% block header %}
+<div class="page-header">
+  <div class="container">
+    <h1>My Booking History</h1>
+    <p>All events you have registered for &mdash; upcoming and past.</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<main class="pb-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+
+        <h2 class="section-heading">Upcoming Bookings</h2>
+        <p class="section-sub">2 upcoming events</p>
+
+        <div class="booking-row">
+          <div class="row g-0">
+            <div class="col-4 col-sm-3 col-md-2">
+              <img src="{{ url_for('static', filename='img/tech-summit.jpeg') }}" class="booking-img" alt="QUT Tech Industry Summit 2025">
+            </div>
+            <div class="col-8 col-sm-9 col-md-10 p-3">
+              <div class="row align-items-start">
+                <div class="col-md-8">
+                  <div class="booking-id"><i class="bi bi-hash"></i> Order ID: NXN-2025-00147</div>
+                  <div class="booking-event-name">QUT Tech Industry Summit 2025</div>
+                  <div class="booking-detail"><i class="bi bi-calendar3 me-1"></i>Friday, 2 May 2025 &middot; 9:00 AM &ndash; 5:00 PM</div>
+                  <div class="booking-detail"><i class="bi bi-geo-alt me-1"></i>QUT Gardens Point, Brisbane</div>
+                  <div class="booking-detail"><i class="bi bi-ticket-perforated me-1"></i>1 ticket &middot; Free</div>
+                  <span class="booking-status open">Open</span>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                  <div style="font-size:0.72rem; color:var(--ink-soft); margin-bottom:4px;">Booked on</div>
+                  <div style="font-weight:600; font-size:0.85rem;">24 Apr 2025, 3:42 PM</div>
+                  <a href="{{ url_for('main.event_detail') }}" class="btn btn-sm mt-2 d-inline-block"
+                    style="background:var(--cream); border:1px solid var(--border); font-size:0.78rem; color:var(--ink);">
+                    <i class="bi bi-arrow-right me-1"></i>View Event
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-row">
+          <div class="row g-0">
+            <div class="col-4 col-sm-3 col-md-2">
+              <img src="{{ url_for('static', filename='img/finance-dinner.jpeg') }}" class="booking-img" alt="Graduate Finance Networking Dinner">
+            </div>
+            <div class="col-8 col-sm-9 col-md-10 p-3">
+              <div class="row align-items-start">
+                <div class="col-md-8">
+                  <div class="booking-id"><i class="bi bi-hash"></i> Order ID: NXN-2025-00162</div>
+                  <div class="booking-event-name">Graduate Finance Networking Dinner</div>
+                  <div class="booking-detail"><i class="bi bi-calendar3 me-1"></i>Thursday, 8 May 2025 &middot; 6:30 PM &ndash; 9:30 PM</div>
+                  <div class="booking-detail"><i class="bi bi-geo-alt me-1"></i>The Westin, Sydney</div>
+                  <div class="booking-detail"><i class="bi bi-ticket-perforated me-1"></i>2 tickets &middot; $50.00 total</div>
+                  <span class="booking-status open">Open</span>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                  <div style="font-size:0.72rem; color:var(--ink-soft); margin-bottom:4px;">Booked on</div>
+                  <div style="font-weight:600; font-size:0.85rem;">25 Apr 2025, 11:17 AM</div>
+                  <a href="{{ url_for('main.event_detail') }}" class="btn btn-sm mt-2 d-inline-block"
+                    style="background:var(--cream); border:1px solid var(--border); font-size:0.78rem; color:var(--ink);">
+                    <i class="bi bi-arrow-right me-1"></i>View Event
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <h2 class="section-heading">Past Bookings</h2>
+        <p class="section-sub">2 past events</p>
+
+        <div class="booking-row" style="opacity:0.8;">
+          <div class="row g-0">
+            <div class="col-4 col-sm-3 col-md-2">
+              <img src="{{ url_for('static', filename='img/career-expo.jpeg') }}" class="booking-img" alt="National Graduate Career Expo 2024">
+            </div>
+            <div class="col-8 col-sm-9 col-md-10 p-3">
+              <div class="row align-items-start">
+                <div class="col-md-8">
+                  <div class="booking-id"><i class="bi bi-hash"></i> Order ID: NXN-2024-00891</div>
+                  <div class="booking-event-name">National Graduate Career Expo 2024</div>
+                  <div class="booking-detail"><i class="bi bi-calendar3 me-1"></i>Saturday, 11 May 2024 &middot; 10:00 AM &ndash; 4:00 PM</div>
+                  <div class="booking-detail"><i class="bi bi-geo-alt me-1"></i>Melbourne Convention Centre</div>
+                  <div class="booking-detail"><i class="bi bi-ticket-perforated me-1"></i>1 ticket &middot; $10.00</div>
+                  <span class="booking-status" style="background:#f0f0f0; color:#555;">Past</span>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                  <div style="font-size:0.72rem; color:var(--ink-soft); margin-bottom:4px;">Booked on</div>
+                  <div style="font-weight:600; font-size:0.85rem;">2 May 2024, 9:04 AM</div>
+                  <a href="{{ url_for('main.event_detail') }}" class="btn btn-sm mt-2 d-inline-block"
+                    style="background:var(--cream); border:1px solid var(--border); font-size:0.78rem; color:var(--ink);">
+                    <i class="bi bi-arrow-right me-1"></i>View Event
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-row" style="opacity:0.8;">
+          <div class="row g-0">
+            <div class="col-4 col-sm-3 col-md-2">
+              <img src="{{ url_for('static', filename='img/consulting-night.jpeg') }}" class="booking-img" alt="Big Four Consulting Case Night">
+            </div>
+            <div class="col-8 col-sm-9 col-md-10 p-3">
+              <div class="row align-items-start">
+                <div class="col-md-8">
+                  <div class="booking-id"><i class="bi bi-hash"></i> Order ID: NXN-2025-00083</div>
+                  <div class="booking-event-name">Big Four Consulting Case Night</div>
+                  <div class="booking-detail"><i class="bi bi-calendar3 me-1"></i>Monday, 19 May 2025 &middot; 5:30 PM &ndash; 8:30 PM</div>
+                  <div class="booking-detail"><i class="bi bi-geo-alt me-1"></i>Deloitte Sydney Office</div>
+                  <div class="booking-detail"><i class="bi bi-ticket-perforated me-1"></i>1 ticket &middot; $20.00</div>
+                  <span class="booking-status cancelled">Cancelled</span>
+                  <div class="mt-1" style="font-size:0.78rem; color:#8b1a1a;">
+                    <i class="bi bi-info-circle me-1"></i>This event was cancelled by the organiser. A refund has been issued.
+                  </div>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                  <div style="font-size:0.72rem; color:var(--ink-soft); margin-bottom:4px;">Booked on</div>
+                  <div style="font-weight:600; font-size:0.85rem;">10 Apr 2025, 7:28 PM</div>
+                  <a href="{{ url_for('main.event_detail') }}" class="btn btn-sm mt-2 d-inline-block"
+                    style="background:var(--cream); border:1px solid var(--border); font-size:0.78rem; color:var(--ink);">
+                    <i class="bi bi-arrow-right me-1"></i>View Event
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-5">
+          <a href="{{ url_for('main.index') }}" class="btn-accent"
+            style="padding:0.6rem 2rem; border-radius:5px; font-size:0.9rem;">
+            <i class="bi bi-search me-2"></i>Browse More Events
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
