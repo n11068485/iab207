@@ -13,11 +13,11 @@ def login():
     login_form = LoginForm()
     error = None
     if login_form.validate_on_submit():
-        user_name = login_form.user_name.data
+        email = login_form.email.data
         password = login_form.password.data
-        user = db.session.scalar(db.select(User).where(User.name == user_name))
+        user = db.session.scalar(db.select(User).where(User.email == email))
         if user is None:
-            error = 'Incorrect user name'
+            error = 'No account found with that email'
         elif not check_password_hash(user.password_hash, password):
             error = 'Incorrect password'
         if error is None:
@@ -27,7 +27,7 @@ def login():
                 return redirect(url_for('main.index'))
             return redirect(nextp)
         else:
-            flash(error)
+            flash(error, 'danger')
     return render_template('user.html', form=login_form, heading='Login')
 
 
@@ -35,8 +35,23 @@ def login():
 def register():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
-        # registration logic to be implemented in Assignment 3
-        flash('Registration successful. Please log in.')
+        existing = db.session.scalar(
+            db.select(User).where(User.email == register_form.email.data))
+        if existing:
+            flash('An account with that email already exists.', 'danger')
+            return render_template('user.html', form=register_form, heading='Register')
+        hashed_pw = generate_password_hash(register_form.password.data)
+        user = User(
+            first_name=register_form.first_name.data,
+            surname=register_form.surname.data,
+            email=register_form.email.data,
+            password_hash=hashed_pw,
+            contact_number=register_form.contact_number.data,
+            street_address=register_form.street_address.data,
+        )
+        db.session.add(user)
+        db.session.commit()
+        flash('Registration successful. Please log in.', 'success')
         return redirect(url_for('auth.login'))
     return render_template('user.html', form=register_form, heading='Register')
 
