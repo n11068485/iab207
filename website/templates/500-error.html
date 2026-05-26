@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}500{% endblock %}
+
+{% block content %}
+
+<section class="container py-5">
+
+  <div class="row justify-content-center text-center">
+
+    <div class="col-lg-6">
+
+      <div class="py-5">
+
+        <h1 class="hero-title">
+          500
+        </h1>
+
+        <p class="section-sub mb-4">
+          Something went wrong on our side.
+          Please try again later.
+        </p>
+
+        <img
+          src="{{ url_for('static', filename='img/error-500.jpg') }}"
+          class="img-fluid mb-4"
+          alt="500 error">
+
+        <div>
+          <a href="{{ url_for('main.index') }}"
+            class="btn-accent">
+
+            Back to EventSphere
+
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+{% endblock %}
