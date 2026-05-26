@@ -1,210 +1,286 @@
 {% extends "base.html" %}
 
-{% block title %}Professional Networking Events{% endblock %}
+{% block title %}Home{% endblock %}
 {% block nav_events %}active{% endblock %}
 
-{% block header %}
+{% block content %}
+
+<!-- HERO -->
 <section class="hero-section">
   <div class="container">
-    <div class="row">
-      <div class="col-lg-7 col-xl-6">
-        <p class="hero-eyebrow">Career Events for Students</p>
-        <h1 class="hero-title">Where ambition<br>finds its room.</h1>
-        <p class="hero-sub">
-          Discover industry conferences, networking dinners, career exhibitions
-          and society events &mdash; curated for students and early-career professionals.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="row align-items-center g-5">
 
-<section class="filter-bar">
-  <div class="container">
-    <div class="row g-2 align-items-end">
-      <div class="col-6 col-md-3">
-        <label class="filter-label" for="filterSector">Sector</label>
-        <select class="form-select form-select-sm" id="filterSector">
-          <option>All Sectors</option>
-          <option>Technology</option>
-          <option>Finance &amp; Banking</option>
-          <option>Engineering</option>
-          <option>Healthcare</option>
-          <option>Law</option>
-          <option>Creative Industries</option>
-          <option>Consulting</option>
-        </select>
-      </div>
-      <div class="col-6 col-md-3">
-        <label class="filter-label" for="filterSubsector">Subsector</label>
-        <select class="form-select form-select-sm" id="filterSubsector">
-          <option>All Subsectors</option>
-          <option>Software Engineering</option>
-          <option>Data Science</option>
-          <option>Cybersecurity</option>
-          <option>Investment Banking</option>
-          <option>Corporate Law</option>
-        </select>
-      </div>
-      <div class="col-6 col-md-2">
-        <label class="filter-label" for="filterSort">Sort By</label>
-        <select class="form-select form-select-sm" id="filterSort">
-          <option>Soonest First</option>
-          <option>Attendance: High–Low</option>
-          <option>Price: Low–High</option>
-          <option>Price: High–Low</option>
-        </select>
-      </div>
-      <div class="col-6 col-md-4">
-        <label class="filter-label" for="filterSearch">Search</label>
-        <div class="input-group input-group-sm">
-          <input type="text" class="form-control" id="filterSearch" placeholder="Event name, organiser…">
-          <button class="btn btn-accent" type="button" aria-label="Search">
-            <i class="bi bi-search"></i>
-          </button>
+      <div class="col-lg-6">
+        <p class="hero-eyebrow">EventSphere</p>
+
+        <h1 class="hero-title">
+          Professional networking events for students and graduates.
+        </h1>
+
+        <p class="hero-sub">
+          Discover leadership forums, finance networking nights,
+          technology showcases and career development experiences
+          designed to connect students with industry professionals.
+        </p>
+
+        <div class="d-flex gap-3 mt-4 flex-wrap">
+          <a href="#events" class="btn-accent">
+            Browse Events
+          </a>
+
+          <a href="{{ url_for('main.create_event') }}"
+            class="btn-outline-light-custom">
+            Post an Event
+          </a>
         </div>
       </div>
+
+      <div class="col-lg-6">
+        <img
+          src="{{ url_for('static', filename='img/hero.jpg') }}"
+          class="img-fluid"
+          alt="Networking event">
+      </div>
+
     </div>
   </div>
 </section>
-{% endblock %}
 
-{% block content %}
-<main class="py-5">
+<!-- FILTER BAR -->
+<section class="filter-bar">
   <div class="container">
-    <div class="mb-4">
-      <h2 class="section-heading">Upcoming Events</h2>
-      <p class="section-sub mb-0">Showing all statuses &mdash; 6 events</p>
-    </div>
-    <div class="row g-4">
 
-      <div class="col-sm-6 col-lg-4">
-        <a href="{{ url_for('main.event_detail') }}" class="event-card-link h-100">
-          <div class="event-card">
-            <div class="event-img-wrap">
-              <img src="{{ url_for('static', filename='img/tech-summit.jpeg') }}" alt="QUT Tech Industry Summit 2025">
-              <span class="status-badge open">Open</span>
-              <span class="sector-tag">Technology</span>
-            </div>
-            <div class="event-body">
-              <p class="event-date"><i class="bi bi-calendar3"></i> Fri 2 May 2025 &middot; Brisbane</p>
-              <h5 class="event-title">QUT Tech Industry Summit 2025</h5>
-              <p class="event-desc">Meet hiring managers and engineers from 40+ Queensland tech companies. Panel discussions, speed networking and grad program info sessions.</p>
-              <div class="event-meta">
-                <span><i class="bi bi-people-fill"></i> 320 attending</span>
-                <span><i class="bi bi-ticket-perforated"></i> Free</span>
-              </div>
-            </div>
-          </div>
-        </a>
+    <div class="row g-3 align-items-end">
+
+      <div class="col-md-4">
+        <label class="filter-label">Browse by Category</label>
+
+        <select class="form-select">
+          <option selected>All Categories</option>
+          <option>Technology</option>
+          <option>Finance</option>
+          <option>Business</option>
+          <option>Leadership</option>
+          <option>Careers</option>
+        </select>
       </div>
 
-      <div class="col-sm-6 col-lg-4">
-        <a href="{{ url_for('main.event_detail') }}" class="event-card-link h-100">
-          <div class="event-card">
-            <div class="event-img-wrap">
-              <img src="{{ url_for('static', filename='img/finance-dinner.jpeg') }}" alt="Graduate Finance Networking Dinner">
-              <span class="status-badge open">Open</span>
-              <span class="sector-tag">Finance</span>
-            </div>
-            <div class="event-body">
-              <p class="event-date"><i class="bi bi-calendar3"></i> Thu 8 May 2025 &middot; Sydney</p>
-              <h5 class="event-title">Graduate Finance Networking Dinner</h5>
-              <p class="event-desc">A seated dinner for penultimate and final-year students pursuing careers in investment banking, funds management and financial advisory.</p>
-              <div class="event-meta">
-                <span><i class="bi bi-people-fill"></i> 80 attending</span>
-                <span><i class="bi bi-ticket-perforated"></i> $25</span>
-              </div>
-            </div>
-          </div>
-        </a>
+      <div class="col-md-6">
+        <label class="filter-label">Search Events</label>
+
+        <input type="text"
+          class="form-control"
+          placeholder="Search by keyword or location">
       </div>
 
-      <div class="col-sm-6 col-lg-4">
-        <a href="{{ url_for('main.event_detail') }}" class="event-card-link h-100">
-          <div class="event-card">
-            <div class="event-img-wrap">
-              <img src="{{ url_for('static', filename='img/career-expo.jpeg') }}" alt="National Graduate Career Expo">
-              <span class="status-badge sold-out">Sold Out</span>
-              <span class="sector-tag">All Sectors</span>
-            </div>
-            <div class="event-body">
-              <p class="event-date"><i class="bi bi-calendar3"></i> Sat 10 May 2025 &middot; Melbourne</p>
-              <h5 class="event-title">National Graduate Career Expo</h5>
-              <p class="event-desc">Australia's largest graduate career exhibition with 120+ employers, CV clinics, mock interviews and on-the-day offer rounds.</p>
-              <div class="event-meta">
-                <span><i class="bi bi-people-fill"></i> 1,200 attending</span>
-                <span><i class="bi bi-ticket-perforated"></i> $10</span>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <div class="col-sm-6 col-lg-4">
-        <a href="{{ url_for('main.event_detail') }}" class="event-card-link h-100">
-          <div class="event-card">
-            <div class="event-img-wrap">
-              <img src="{{ url_for('static', filename='img/law-mixer.jpeg') }}" alt="QLS Student Law Society Mixer">
-              <span class="status-badge open">Open</span>
-              <span class="sector-tag">Law</span>
-            </div>
-            <div class="event-body">
-              <p class="event-date"><i class="bi bi-calendar3"></i> Wed 14 May 2025 &middot; Brisbane</p>
-              <h5 class="event-title">QLS Student Law Society Mixer</h5>
-              <p class="event-desc">Informal drinks and networking with solicitors, barristers and legal professionals, hosted by the Queensland Law Society student chapter.</p>
-              <div class="event-meta">
-                <span><i class="bi bi-people-fill"></i> 150 attending</span>
-                <span><i class="bi bi-ticket-perforated"></i> Free</span>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <div class="col-sm-6 col-lg-4">
-        <a href="{{ url_for('main.event_detail') }}" class="event-card-link h-100">
-          <div class="event-card">
-            <div class="event-img-wrap">
-              <img src="{{ url_for('static', filename='img/engineering-conf.jpeg') }}" alt="Engineers Australia Student Conference">
-              <span class="status-badge inactive">Inactive</span>
-              <span class="sector-tag">Engineering</span>
-            </div>
-            <div class="event-body">
-              <p class="event-date"><i class="bi bi-calendar3"></i> Fri 16 May 2025 &middot; Brisbane</p>
-              <h5 class="event-title">Engineers Australia Student Conference</h5>
-              <p class="event-desc">A full-day conference covering civil, mechanical and electrical disciplines, with keynotes from industry leaders and a graduate recruitment fair.</p>
-              <div class="event-meta">
-                <span><i class="bi bi-people-fill"></i> 420 attending</span>
-                <span><i class="bi bi-ticket-perforated"></i> $15</span>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <div class="col-sm-6 col-lg-4">
-        <a href="{{ url_for('main.event_detail') }}" class="event-card-link h-100">
-          <div class="event-card">
-            <div class="event-img-wrap">
-              <img src="{{ url_for('static', filename='img/consulting-night.jpeg') }}" alt="Big Four Consulting Case Night">
-              <span class="status-badge cancelled">Cancelled</span>
-              <span class="sector-tag">Consulting</span>
-            </div>
-            <div class="event-body">
-              <p class="event-date"><i class="bi bi-calendar3"></i> Mon 19 May 2025 &middot; Sydney</p>
-              <h5 class="event-title">Big Four Consulting Case Night</h5>
-              <p class="event-desc">Practice live case interviews with consultants from Deloitte, PwC, EY and KPMG. Feedback sessions and networking drinks to follow.</p>
-              <div class="event-meta">
-                <span><i class="bi bi-people-fill"></i> 200 attending</span>
-                <span><i class="bi bi-ticket-perforated"></i> $20</span>
-              </div>
-            </div>
-          </div>
-        </a>
+      <div class="col-md-2">
+        <button class="btn-accent w-100">
+          Search
+        </button>
       </div>
 
     </div>
   </div>
-</main>
+</section>
+
+<!-- UPCOMING EVENTS -->
+<section class="py-5" id="events">
+
+  <div class="container">
+
+    <div class="mb-5">
+      <h2 class="section-heading">
+        Upcoming Events
+      </h2>
+
+      <p class="section-sub">
+        Explore student and graduate networking opportunities across Brisbane.
+      </p>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- EVENT CARD 1 -->
+      <div class="col-lg-4 col-md-6">
+
+        <a href="{{ url_for('main.event_detail') }}"
+          class="event-card-link">
+
+          <div class="event-card">
+
+            <div class="event-img-wrap">
+
+              <img src="{{ url_for('static', filename='img/event1.jpg') }}"
+                alt="Technology Networking Event">
+
+              <span class="status-badge open">
+                Open
+              </span>
+
+              <span class="sector-tag">
+                Technology
+              </span>
+
+            </div>
+
+            <div class="event-body">
+
+              <p class="event-date">
+                18 September 2026
+              </p>
+
+              <h3 class="event-title">
+                Future Tech Industry Night
+              </h3>
+
+              <p class="event-desc">
+                Connect with software engineers, cybersecurity analysts
+                and IT recruiters from leading Australian firms.
+              </p>
+
+              <div class="event-meta">
+
+                <span>
+                  <i class="bi bi-geo-alt"></i>
+                  Brisbane CBD
+                </span>
+
+                <span>
+                  <i class="bi bi-ticket"></i>
+                  $20
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </a>
+
+      </div>
+
+      <!-- EVENT CARD 2 -->
+      <div class="col-lg-4 col-md-6">
+
+        <a href="{{ url_for('main.event_detail') }}"
+          class="event-card-link">
+
+          <div class="event-card">
+
+            <div class="event-img-wrap">
+
+              <img src="{{ url_for('static', filename='img/event2.jpg') }}"
+                alt="Finance Event">
+
+              <span class="status-badge sold-out">
+                Sold Out
+              </span>
+
+              <span class="sector-tag">
+                Finance
+              </span>
+
+            </div>
+
+            <div class="event-body">
+
+              <p class="event-date">
+                25 September 2026
+              </p>
+
+              <h3 class="event-title">
+                Women in Finance Networking Evening
+              </h3>
+
+              <p class="event-desc">
+                Meet professionals from banking, consulting and investment firms.
+              </p>
+
+              <div class="event-meta">
+
+                <span>
+                  <i class="bi bi-geo-alt"></i>
+                  South Bank
+                </span>
+
+                <span>
+                  <i class="bi bi-ticket"></i>
+                  Free
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </a>
+
+      </div>
+
+      <!-- EVENT CARD 3 -->
+      <div class="col-lg-4 col-md-6">
+
+        <a href="{{ url_for('main.event_detail') }}"
+          class="event-card-link">
+
+          <div class="event-card">
+
+            <div class="event-img-wrap">
+
+              <img src="{{ url_for('static', filename='img/event3.jpg') }}"
+                alt="Leadership Event">
+
+              <span class="status-badge cancelled">
+                Cancelled
+              </span>
+
+              <span class="sector-tag">
+                Leadership
+              </span>
+
+            </div>
+
+            <div class="event-body">
+
+              <p class="event-date">
+                3 October 2026
+              </p>
+
+              <h3 class="event-title">
+                Young Leaders Summit
+              </h3>
+
+              <p class="event-desc">
+                Leadership workshops and keynote sessions for emerging professionals.
+              </p>
+
+              <div class="event-meta">
+
+                <span>
+                  <i class="bi bi-geo-alt"></i>
+                  QUT Gardens Point
+                </span>
+
+                <span>
+                  <i class="bi bi-ticket"></i>
+                  $35
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
 {% endblock %}
