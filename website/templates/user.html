@@ -4,22 +4,49 @@
 {% block title %}{{ heading }}{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="page-header mb-4">
-        <h4>{{ heading }}</h4>
-      </div>
-      {{ render_form(form) }}
-    </div>
-  </div>
 
-  {% if heading == 'Login' %}
+<section class="page-header">
+  <div class="container">
+    <h1>{{ heading }}</h1>
+
+    {% if heading == 'Login' %}
+      <p>Sign in to book events, post comments and manage your bookings.</p>
+    {% else %}
+      <p>Create an EventSphere account to book tickets and create events.</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="container pb-5">
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <p>New user? <a href="{{ url_for('auth.register') }}">Click here</a> to register.</p>
+    <div class="col-lg-6 col-md-8">
+
+      <div class="form-card">
+
+        {% if heading == 'Login' %}
+          <div class="form-section-title">Welcome back</div>
+        {% else %}
+          <div class="form-section-title">Create your account</div>
+        {% endif %}
+
+        {{ render_form(form) }}
+
+        {% if heading == 'Login' %}
+          <p class="mt-4 mb-0 booking-detail">
+            New to EventSphere?
+            <a href="{{ url_for('auth.register') }}">Create an account</a>
+          </p>
+        {% else %}
+          <p class="mt-4 mb-0 booking-detail">
+            Already have an account?
+            <a href="{{ url_for('auth.login') }}">Sign in here</a>
+          </p>
+        {% endif %}
+
+      </div>
+
     </div>
   </div>
-  {% endif %}
-</div>
+</section>
+
 {% endblock %}
