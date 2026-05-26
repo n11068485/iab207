@@ -1,241 +1,156 @@
 {% extends "base.html" %}
 
-{% block title %}QUT Tech Industry Summit 2025{% endblock %}
-
-{% block aoc_banner %}
-<div class="aoc-banner">
-  <strong>Acknowledgement of Country:</strong> This event is held on Turrbal and Yuggera Country.
-  The organisers pay respect to Elders past, present and emerging, and acknowledge the continuing
-  connection of Aboriginal and Torres Strait Islander peoples to land, waters and community.
-</div>
-{% endblock %}
-
-{% block header %}
-<div class="bg-white border-bottom py-2">
-  <div class="container">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb mb-0 small">
-        <li class="breadcrumb-item">
-          <a href="{{ url_for('main.index') }}" class="text-decoration-none" style="color:var(--accent)">Events</a>
-        </li>
-        <li class="breadcrumb-item active">QUT Tech Industry Summit 2025</li>
-      </ol>
-    </nav>
-  </div>
-</div>
-{% endblock %}
+{% block title %}Event Details{% endblock %}
 
 {% block content %}
-<main class="py-4 py-md-5">
+
+<section class="page-header">
   <div class="container">
-    <div class="row g-4 g-lg-5">
-
-      <div class="col-lg-8">
-        <img src="{{ url_for('static', filename='img/tech-summit.jpeg') }}"
-             alt="QUT Tech Industry Summit 2025" class="detail-hero-img">
-
-        <div class="d-flex align-items-center gap-2 mb-3">
-          <span class="status-badge open" style="position:static;">Open</span>
-          <span style="background:var(--ink); color:#fff; font-size:0.68rem; font-weight:600;
-                       padding:3px 8px; border-radius:3px;">Technology</span>
-        </div>
-
-        <h1 class="detail-title">QUT Tech Industry Summit 2025</h1>
-
-        <div class="detail-meta-row">
-          <span><i class="bi bi-calendar3"></i> Friday, 2 May 2025</span>
-          <span><i class="bi bi-clock"></i> 9:00 AM &ndash; 5:00 PM</span>
-          <span><i class="bi bi-geo-alt-fill"></i> QUT Gardens Point, Brisbane</span>
-          <span><i class="bi bi-building"></i> QUT Career Hub</span>
-        </div>
-
-        <h5 class="mb-2" style="font-family:'DM Serif Display',serif;">About this Event</h5>
-        <p>The QUT Tech Industry Summit brings together students and hiring professionals from over
-        40 Queensland technology companies for a full day of structured networking, panel discussions,
-        and graduate program information sessions.</p>
-        <p>Whether you are finishing your undergraduate degree, completing a postgraduate qualification
-        or simply exploring career pathways in the technology sector, this summit provides direct access
-        to the professionals and organisations shaping Queensland's digital economy.</p>
-        <p>The day includes a morning keynote from a senior industry figure, three sector-specific panel
-        sessions, speed networking rounds, and an afternoon exhibition floor where companies will be
-        actively seeking candidates for graduate and intern roles.</p>
-
-        <hr class="my-4">
-
-        <h5 class="mb-3" style="font-family:'DM Serif Display',serif;">
-          <i class="bi bi-chat-left-text me-2" style="color:var(--accent)"></i>Comments
-        </h5>
-
-        <div class="comment-item">
-          <div class="comment-author">Jordan Pham</div>
-          <div class="comment-time">22 April 2025 at 2:14 PM</div>
-          <div class="comment-text">Attended last year and it was genuinely one of the most useful
-          days of my degree. Ended up getting an interview through one of the speed networking contacts.</div>
-        </div>
-        <div class="comment-item">
-          <div class="comment-author">Amara Osei</div>
-          <div class="comment-time">23 April 2025 at 10:47 AM</div>
-          <div class="comment-text">Is there parking on campus or is public transport recommended?
-          Also, do we need printed CVs or is everything digital?</div>
-        </div>
-        <div class="comment-item">
-          <div class="comment-author">
-            QUT Career Hub
-            <span class="badge ms-1" style="background:var(--accent); font-size:0.65rem; vertical-align:middle;">Organiser</span>
-          </div>
-          <div class="comment-time">23 April 2025 at 12:03 PM</div>
-          <div class="comment-text">Hi Amara &mdash; public transport is strongly recommended as campus
-          parking is limited on event days. Bring a few printed CVs, though most recruiters will
-          also have a digital submission option.</div>
-        </div>
-        <div class="comment-item">
-          <div class="comment-author">Marcus Delgado</div>
-          <div class="comment-time">24 April 2025 at 6:55 PM</div>
-          <div class="comment-text">Are first-year students welcome or is this primarily aimed
-          at final-year students and graduates?</div>
-        </div>
-
-        <div class="info-card mt-3" style="background:var(--cream); border-style:dashed;">
-          <p class="mb-2" style="font-size:0.875rem; color:var(--ink-soft);">
-            <i class="bi bi-lock me-1"></i> You must be signed in to post a comment.
-          </p>
-          <a href="{{ url_for('auth.login') }}" class="btn-accent"
-            style="font-size:0.82rem; padding:0.38rem 1rem;">
-            Sign In to Comment
-          </a>
-        </div>
-      </div>
-
-      <div class="col-lg-4">
-        <div class="info-card sticky-top" style="top:80px;">
-          <div class="info-card-label">Ticket Price</div>
-          <div style="font-family:'DM Serif Display',serif; font-size:2rem; color:var(--accent); margin-bottom:0.15rem;">Free</div>
-          <div style="font-size:0.8rem; color:var(--ink-soft); margin-bottom:1.25rem;">No charge &mdash; registration required</div>
-
-          <div style="font-size:0.78rem; color:var(--ink-soft); margin-bottom:4px;">Availability &mdash; 48 of 320 remaining</div>
-          <div class="progress mb-3" style="height:6px; border-radius:3px;">
-            <div class="progress-bar" role="progressbar"
-              style="width:85%; background:var(--accent);"
-              aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-
-          <hr>
-
-          <div class="info-card-label mb-2">Event Details</div>
-          <ul class="list-unstyled mb-3" style="font-size:0.875rem; color:var(--ink-soft);">
-            <li class="mb-1"><i class="bi bi-calendar3 me-2"></i>Friday, 2 May 2025</li>
-            <li class="mb-1"><i class="bi bi-clock me-2"></i>9:00 AM &ndash; 5:00 PM AEST</li>
-            <li class="mb-1"><i class="bi bi-geo-alt me-2"></i>QUT Gardens Point, Brisbane</li>
-            <li class="mb-1"><i class="bi bi-people me-2"></i>Capacity: 320</li>
-          </ul>
-
-          <button type="button" class="btn btn-accent w-100 py-2"
-            data-bs-toggle="modal" data-bs-target="#bookingModal"
-            style="font-size:0.95rem; border-radius:5px;">
-            <i class="bi bi-ticket-perforated me-2"></i>Book Tickets
-          </button>
-          <p class="text-center mt-2 mb-0" style="font-size:0.75rem; color:var(--ink-soft);">
-            <i class="bi bi-lock me-1"></i>Sign in required to complete booking
-          </p>
-        </div>
-      </div>
-
-    </div>
+    <h1>Future Tech Industry Night</h1>
+    <p>Connect with industry professionals, recruiters and student leaders.</p>
   </div>
-</main>
+</section>
 
-<!-- BOOKING MODAL -->
-<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border-radius:10px; border:1px solid var(--border);">
-      <div class="modal-header" style="background:var(--ink); border-radius:9px 9px 0 0; border-bottom:3px solid var(--accent);">
-        <h5 class="modal-title" id="bookingModalLabel" style="font-family:'DM Serif Display',serif; color:#fff;">Book Tickets</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body p-4">
-        <div class="d-flex align-items-start gap-3 mb-4 pb-3" style="border-bottom:1px solid var(--border);">
-          <img src="{{ url_for('static', filename='img/tech-summit.jpeg') }}" alt="Event thumbnail"
-            style="width:64px; height:64px; object-fit:cover; border-radius:6px;">
-          <div>
-            <div style="font-family:'DM Serif Display',serif; font-size:1rem;">QUT Tech Industry Summit 2025</div>
-            <div style="font-size:0.8rem; color:var(--ink-soft);">Fri 2 May 2025 &middot; 9:00 AM &middot; QUT Gardens Point</div>
-            <span class="status-badge open mt-1" style="position:static;">Open</span>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label" for="qtyInput">Number of Tickets</label>
-          <div class="input-group" style="max-width:160px;">
-            <button class="btn btn-outline-secondary" type="button" id="qtyMinus">&#8722;</button>
-            <input type="number" class="form-control text-center" id="qtyInput" value="1" min="1" max="5">
-            <button class="btn btn-outline-secondary" type="button" id="qtyPlus">&#43;</button>
-          </div>
-          <div class="form-text">Maximum 5 tickets per booking. 48 remaining.</div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label" for="bookingName">Full Name</label>
-          <input type="text" class="form-control" id="bookingName" placeholder="Your full name">
-        </div>
-        <div class="mb-3">
-          <label class="form-label" for="bookingEmail">Email Address</label>
-          <input type="email" class="form-control" id="bookingEmail" placeholder="your.email@example.com">
-        </div>
-        <div class="d-flex justify-content-between align-items-center pt-2" style="border-top:1px solid var(--border);">
-          <div>
-            <div class="info-card-label mb-0">Total</div>
-            <div style="font-family:'DM Serif Display',serif; font-size:1.5rem; color:var(--accent);">Free</div>
-          </div>
-          <button type="button" class="btn btn-accent px-4 py-2" onclick="confirmBooking()">Confirm Booking</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<section class="container">
+  <div class="row g-5">
 
-<!-- ORDER CONFIRMATION MODAL -->
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border-radius:10px; text-align:center; border:1px solid var(--border);">
-      <div class="modal-body p-5">
-        <div style="font-size:3rem; color:var(--accent); margin-bottom:1rem;">&#10003;</div>
-        <h4 style="font-family:'DM Serif Display',serif;">Booking Confirmed!</h4>
-        <p style="color:var(--ink-soft); font-size:0.9rem;">
-          Your booking for <strong>QUT Tech Industry Summit 2025</strong> has been confirmed.
+    <!-- LEFT SIDE: EVENT DETAILS -->
+    <div class="col-lg-8">
+
+      <img
+        src="{{ url_for('static', filename='img/event1.jpg') }}"
+        alt="Future Tech Industry Night"
+        class="detail-hero-img">
+
+      <span class="status-badge open position-static d-inline-block mb-3">
+        Open
+      </span>
+
+      <h2 class="detail-title">
+        Future Tech Industry Night
+      </h2>
+
+      <div class="detail-meta-row">
+        <span><i class="bi bi-calendar-event"></i> 18 September 2026</span>
+        <span><i class="bi bi-clock"></i> 6:00 PM - 9:00 PM</span>
+        <span><i class="bi bi-geo-alt"></i> Brisbane CBD</span>
+        <span><i class="bi bi-ticket"></i> $20 per ticket</span>
+        <span><i class="bi bi-people"></i> 45 tickets available</span>
+      </div>
+
+      <h3 class="form-section-title">About this event</h3>
+
+      <p>
+        Future Tech Industry Night is designed for students and graduates who
+        want to connect with professionals in software development,
+        cybersecurity, data analytics and digital transformation.
+      </p>
+
+      <p>
+        Attendees will hear from guest speakers, participate in networking
+        activities and gain practical insight into career pathways across the
+        technology sector.
+      </p>
+
+      <!-- ACKNOWLEDGEMENT OF COUNTRY -->
+      <div class="info-card mt-4">
+        <p class="info-card-label">Acknowledgement of Country</p>
+
+        <p class="mb-0">
+          NexusNet acknowledges the Traditional Custodians of the land on which
+          this event is held and pays respect to Elders past and present. We
+          recognise their continuing connection to land, waters, culture and
+          community.
         </p>
-        <div class="info-card mt-3 mb-3" style="text-align:left;">
-          <div class="info-card-label">Order ID</div>
-          <div style="font-weight:600; font-size:1.1rem; margin-bottom:0.75rem;">#NXN-2025-00147</div>
-          <hr>
-          <div class="row g-2" style="font-size:0.85rem; color:var(--ink-soft);">
-            <div class="col-6"><strong>Event:</strong> QUT Tech Summit</div>
-            <div class="col-6"><strong>Tickets:</strong> 1</div>
-            <div class="col-6"><strong>Date:</strong> 2 May 2025</div>
-            <div class="col-6"><strong>Total:</strong> Free</div>
-          </div>
-        </div>
-        <a href="{{ url_for('main.booking_history') }}" class="btn-accent" style="padding:0.5rem 1.5rem; border-radius:5px;">
-          View My Bookings
-        </a>
-        <button type="button" class="btn btn-sm btn-link d-block mx-auto mt-2"
-          data-bs-dismiss="modal" style="color:var(--ink-soft);">Close</button>
       </div>
-    </div>
-  </div>
-</div>
-{% endblock %}
 
-{% block scripts %}
-<script>
-  document.getElementById('qtyMinus').addEventListener('click', function() {
-    var input = document.getElementById('qtyInput');
-    if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
-  });
-  document.getElementById('qtyPlus').addEventListener('click', function() {
-    var input = document.getElementById('qtyInput');
-    if (parseInt(input.value) < 5) input.value = parseInt(input.value) + 1;
-  });
-  function confirmBooking() {
-    bootstrap.Modal.getInstance(document.getElementById('bookingModal')).hide();
-    new bootstrap.Modal(document.getElementById('confirmModal')).show();
-  }
-</script>
+      <!-- COMMENTS -->
+      <div class="mt-5">
+        <h3 class="form-section-title">Comments</h3>
+
+        <div class="comment-item">
+          <p class="comment-author">Grace Hatu</p>
+          <p class="comment-time">Posted 12 August 2026</p>
+          <p class="comment-text">
+            This looks like a great opportunity for students interested in tech careers.
+          </p>
+        </div>
+
+        <div class="comment-item">
+          <p class="comment-author">Daniel Khol</p>
+          <p class="comment-time">Posted 15 August 2026</p>
+          <p class="comment-text">
+            Looking forward to meeting people from industry and learning about graduate roles.
+          </p>
+        </div>
+
+        <div class="form-card mt-4">
+          <h4 class="form-section-title">Post a comment</h4>
+
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Comment</label>
+              <textarea class="form-control" rows="4"
+                placeholder="Write your comment here"></textarea>
+            </div>
+
+            <button type="submit" class="btn-accent">
+              Submit Comment
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE: BOOKING CARD -->
+    <div class="col-lg-4">
+
+      <div class="info-card sticky-top" style="top: 100px;">
+
+        <p class="info-card-label">Ticket Booking</p>
+
+        <h3 class="event-title">
+          Reserve your place
+        </h3>
+
+        <p class="booking-detail">
+          You must be logged in to buy tickets.
+        </p>
+
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Ticket Quantity</label>
+            <input type="number" class="form-control" min="1" max="45" value="1">
+          </div>
+
+          <button type="submit" class="btn-accent w-100">
+            Buy Tickets
+          </button>
+        </form>
+
+        <hr>
+
+        <p class="info-card-label">Order Confirmation Preview</p>
+
+        <div class="booking-row p-3">
+          <p class="booking-id">Order ID: ORD-2048</p>
+          <p class="booking-detail mb-1">
+            Event: Future Tech Industry Night
+          </p>
+          <p class="booking-detail mb-1">
+            Quantity: 1 ticket
+          </p>
+          <p class="booking-detail mb-0">
+            Total: $20
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
 {% endblock %}
