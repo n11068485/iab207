@@ -19,27 +19,46 @@
       <div class="col-lg-9">
 
         <h2 class="section-heading">Upcoming Bookings</h2>
-        <p class="section-sub">2 upcoming events</p>
+        <p class="section-sub">{{ upcoming|length }} upcoming event{{ 's' if upcoming|length != 1 }}</p>
 
+        {% for order in upcoming %}
         <div class="booking-row">
           <div class="row g-0">
             <div class="col-4 col-sm-3 col-md-2">
-              <img src="{{ url_for('static', filename='img/tech-summit.jpeg') }}" class="booking-img" alt="QUT Tech Industry Summit 2025">
+              <img src="{{ url_for('static', filename='img/' + order.event.image) }}"
+                   class="booking-img" alt="{{ order.event.title }}">
             </div>
             <div class="col-8 col-sm-9 col-md-10 p-3">
               <div class="row align-items-start">
                 <div class="col-md-8">
-                  <div class="booking-id"><i class="bi bi-hash"></i> Order ID: NXN-2025-00147</div>
-                  <div class="booking-event-name">QUT Tech Industry Summit 2025</div>
-                  <div class="booking-detail"><i class="bi bi-calendar3 me-1"></i>Friday, 2 May 2025 &middot; 9:00 AM &ndash; 5:00 PM</div>
-                  <div class="booking-detail"><i class="bi bi-geo-alt me-1"></i>QUT Gardens Point, Brisbane</div>
-                  <div class="booking-detail"><i class="bi bi-ticket-perforated me-1"></i>1 ticket &middot; Free</div>
-                  <span class="booking-status open">Open</span>
+                  <div class="booking-id"><i class="bi bi-hash"></i> Order ID: {{ order.order_ref }}</div>
+                  <div class="booking-event-name">{{ order.event.title }}</div>
+                  <div class="booking-detail">
+                    <i class="bi bi-calendar3 me-1"></i>
+                    {{ order.event.date.strftime('%A, %d %B %Y') }} &middot;
+                    {{ order.event.date.strftime('%I:%M %p') }} &ndash; {{ order.event.end_time.strftime('%I:%M %p') }}
+                  </div>
+                  <div class="booking-detail">
+                    <i class="bi bi-geo-alt me-1"></i>{{ order.event.venue }}, {{ order.event.city }}
+                  </div>
+                  <div class="booking-detail">
+                    <i class="bi bi-ticket-perforated me-1"></i>
+                    {{ order.quantity }} ticket{{ 's' if order.quantity != 1 }} &middot;
+                    {% if order.total_price == 0 %}Free{% else %}${{ '%.2f'|format(order.total_price) }} total{% endif %}
+                  </div>
+                  <span class="booking-status {{ order.event.status.lower().replace(' ', '-') }}">
+                    {{ order.event.status }}
+                  </span>
+                  {% if order.event.status == 'Cancelled' %}
+                  <div class="mt-1" style="font-size:0.78rem; color:#8b1a1a;">
+                    <i class="bi bi-info-circle me-1"></i>This event was cancelled by the organiser.
+                  </div>
+                  {% endif %}
                 </div>
                 <div class="col-md-4 text-md-end mt-3 mt-md-0">
                   <div style="font-size:0.72rem; color:var(--ink-soft); margin-bottom:4px;">Booked on</div>
-                  <div style="font-weight:600; font-size:0.85rem;">24 Apr 2025, 3:42 PM</div>
-                  <a href="{{ url_for('main.event_detail') }}" class="btn btn-sm mt-2 d-inline-block"
+                  <div style="font-weight:600; font-size:0.85rem;">{{ order.booked_at.strftime('%d %b %Y, %I:%M %p') }}</div>
+                  <a href="{{ url_for('main.event_detail', id=order.event.id) }}" class="btn btn-sm mt-2 d-inline-block"
                     style="background:var(--cream); border:1px solid var(--border); font-size:0.78rem; color:var(--ink);">
                     <i class="bi bi-arrow-right me-1"></i>View Event
                   </a>
@@ -48,90 +67,49 @@
             </div>
           </div>
         </div>
-
-        <div class="booking-row">
-          <div class="row g-0">
-            <div class="col-4 col-sm-3 col-md-2">
-              <img src="{{ url_for('static', filename='img/finance-dinner.jpeg') }}" class="booking-img" alt="Graduate Finance Networking Dinner">
-            </div>
-            <div class="col-8 col-sm-9 col-md-10 p-3">
-              <div class="row align-items-start">
-                <div class="col-md-8">
-                  <div class="booking-id"><i class="bi bi-hash"></i> Order ID: NXN-2025-00162</div>
-                  <div class="booking-event-name">Graduate Finance Networking Dinner</div>
-                  <div class="booking-detail"><i class="bi bi-calendar3 me-1"></i>Thursday, 8 May 2025 &middot; 6:30 PM &ndash; 9:30 PM</div>
-                  <div class="booking-detail"><i class="bi bi-geo-alt me-1"></i>The Westin, Sydney</div>
-                  <div class="booking-detail"><i class="bi bi-ticket-perforated me-1"></i>2 tickets &middot; $50.00 total</div>
-                  <span class="booking-status open">Open</span>
-                </div>
-                <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                  <div style="font-size:0.72rem; color:var(--ink-soft); margin-bottom:4px;">Booked on</div>
-                  <div style="font-weight:600; font-size:0.85rem;">25 Apr 2025, 11:17 AM</div>
-                  <a href="{{ url_for('main.event_detail') }}" class="btn btn-sm mt-2 d-inline-block"
-                    style="background:var(--cream); border:1px solid var(--border); font-size:0.78rem; color:var(--ink);">
-                    <i class="bi bi-arrow-right me-1"></i>View Event
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {% else %}
+        <p class="section-sub">You have no upcoming bookings.</p>
+        {% endfor %}
 
         <hr class="my-4">
 
         <h2 class="section-heading">Past Bookings</h2>
-        <p class="section-sub">2 past events</p>
+        <p class="section-sub">{{ past|length }} past event{{ 's' if past|length != 1 }}</p>
 
+        {% for order in past %}
         <div class="booking-row" style="opacity:0.8;">
           <div class="row g-0">
             <div class="col-4 col-sm-3 col-md-2">
-              <img src="{{ url_for('static', filename='img/career-expo.jpeg') }}" class="booking-img" alt="National Graduate Career Expo 2024">
+              <img src="{{ url_for('static', filename='img/' + order.event.image) }}"
+                   class="booking-img" alt="{{ order.event.title }}">
             </div>
             <div class="col-8 col-sm-9 col-md-10 p-3">
               <div class="row align-items-start">
                 <div class="col-md-8">
-                  <div class="booking-id"><i class="bi bi-hash"></i> Order ID: NXN-2024-00891</div>
-                  <div class="booking-event-name">National Graduate Career Expo 2024</div>
-                  <div class="booking-detail"><i class="bi bi-calendar3 me-1"></i>Saturday, 11 May 2024 &middot; 10:00 AM &ndash; 4:00 PM</div>
-                  <div class="booking-detail"><i class="bi bi-geo-alt me-1"></i>Melbourne Convention Centre</div>
-                  <div class="booking-detail"><i class="bi bi-ticket-perforated me-1"></i>1 ticket &middot; $10.00</div>
-                  <span class="booking-status" style="background:#f0f0f0; color:#555;">Past</span>
-                </div>
-                <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                  <div style="font-size:0.72rem; color:var(--ink-soft); margin-bottom:4px;">Booked on</div>
-                  <div style="font-weight:600; font-size:0.85rem;">2 May 2024, 9:04 AM</div>
-                  <a href="{{ url_for('main.event_detail') }}" class="btn btn-sm mt-2 d-inline-block"
-                    style="background:var(--cream); border:1px solid var(--border); font-size:0.78rem; color:var(--ink);">
-                    <i class="bi bi-arrow-right me-1"></i>View Event
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="booking-row" style="opacity:0.8;">
-          <div class="row g-0">
-            <div class="col-4 col-sm-3 col-md-2">
-              <img src="{{ url_for('static', filename='img/consulting-night.jpeg') }}" class="booking-img" alt="Big Four Consulting Case Night">
-            </div>
-            <div class="col-8 col-sm-9 col-md-10 p-3">
-              <div class="row align-items-start">
-                <div class="col-md-8">
-                  <div class="booking-id"><i class="bi bi-hash"></i> Order ID: NXN-2025-00083</div>
-                  <div class="booking-event-name">Big Four Consulting Case Night</div>
-                  <div class="booking-detail"><i class="bi bi-calendar3 me-1"></i>Monday, 19 May 2025 &middot; 5:30 PM &ndash; 8:30 PM</div>
-                  <div class="booking-detail"><i class="bi bi-geo-alt me-1"></i>Deloitte Sydney Office</div>
-                  <div class="booking-detail"><i class="bi bi-ticket-perforated me-1"></i>1 ticket &middot; $20.00</div>
-                  <span class="booking-status cancelled">Cancelled</span>
-                  <div class="mt-1" style="font-size:0.78rem; color:#8b1a1a;">
-                    <i class="bi bi-info-circle me-1"></i>This event was cancelled by the organiser. A refund has been issued.
+                  <div class="booking-id"><i class="bi bi-hash"></i> Order ID: {{ order.order_ref }}</div>
+                  <div class="booking-event-name">{{ order.event.title }}</div>
+                  <div class="booking-detail">
+                    <i class="bi bi-calendar3 me-1"></i>{{ order.event.date.strftime('%A, %d %B %Y') }}
                   </div>
+                  <div class="booking-detail">
+                    <i class="bi bi-geo-alt me-1"></i>{{ order.event.venue }}, {{ order.event.city }}
+                  </div>
+                  <div class="booking-detail">
+                    <i class="bi bi-ticket-perforated me-1"></i>
+                    {{ order.quantity }} ticket{{ 's' if order.quantity != 1 }} &middot;
+                    {% if order.total_price == 0 %}Free{% else %}${{ '%.2f'|format(order.total_price) }} total{% endif %}
+                  </div>
+                  <span class="booking-status" style="background:#f0f0f0; color:#555;">Past</span>
+                  {% if order.event.status == 'Cancelled' %}
+                  <div class="mt-1" style="font-size:0.78rem; color:#8b1a1a;">
+                    <i class="bi bi-info-circle me-1"></i>This event was cancelled by the organiser.
+                  </div>
+                  {% endif %}
                 </div>
                 <div class="col-md-4 text-md-end mt-3 mt-md-0">
                   <div style="font-size:0.72rem; color:var(--ink-soft); margin-bottom:4px;">Booked on</div>
-                  <div style="font-weight:600; font-size:0.85rem;">10 Apr 2025, 7:28 PM</div>
-                  <a href="{{ url_for('main.event_detail') }}" class="btn btn-sm mt-2 d-inline-block"
+                  <div style="font-weight:600; font-size:0.85rem;">{{ order.booked_at.strftime('%d %b %Y, %I:%M %p') }}</div>
+                  <a href="{{ url_for('main.event_detail', id=order.event.id) }}" class="btn btn-sm mt-2 d-inline-block"
                     style="background:var(--cream); border:1px solid var(--border); font-size:0.78rem; color:var(--ink);">
                     <i class="bi bi-arrow-right me-1"></i>View Event
                   </a>
@@ -140,6 +118,9 @@
             </div>
           </div>
         </div>
+        {% else %}
+        <p class="section-sub">No past bookings.</p>
+        {% endfor %}
 
         <div class="text-center mt-5">
           <a href="{{ url_for('main.index') }}" class="btn-accent"

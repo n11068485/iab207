@@ -1,8 +1,11 @@
 # import flask - from 'package' import 'Class'
-from flask import Flask, app 
+from flask import Flask, app
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect
+
+csrf = CSRFProtect()
 
 db = SQLAlchemy()
 
@@ -20,6 +23,7 @@ def create_app():
     db.init_app(app)
 
     Bootstrap5(app)
+    csrf.init_app(app)
     
     # initialise the login manager
     login_manager = LoginManager()
