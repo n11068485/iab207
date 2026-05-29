@@ -5,9 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 
-csrf = CSRFProtect()
-
 db = SQLAlchemy()
+csrf = CSRFProtect()
 
 # create a function that creates a web application
 # a web server will run this web application
@@ -21,9 +20,9 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sitedata.sqlite'
     # initialise db with flask app
     db.init_app(app)
+    csrf.init_app(app)
 
     Bootstrap5(app)
-    csrf.init_app(app)
     
     # initialise the login manager
     login_manager = LoginManager()

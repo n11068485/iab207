@@ -33,6 +33,9 @@ def login():
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
+    # next is threaded through from the nav link so that after registering
+    # and then logging in, the user lands back on the page they came from.
+    nextp = request.args.get('next')
     register_form = RegisterForm()
     if register_form.validate_on_submit():
         existing = db.session.scalar(
@@ -52,6 +55,8 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('Registration successful. Please log in.', 'success')
+        if nextp and nextp.startswith('/'):
+            return redirect(url_for('auth.login', next=nextp))
         return redirect(url_for('auth.login'))
     return render_template('user.html', form=register_form, heading='Register')
 

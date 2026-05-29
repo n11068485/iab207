@@ -71,20 +71,34 @@
               </div>
             </div>
             <div class="row g-3 mt-0">
-              <div class="col-md-8">
+              <div class="col-md-6">
                 <label class="form-label">Venue Name <span style="color:var(--accent)">*</span></label>
                 {{ form.venue(class="form-control", placeholder="e.g. QUT Gardens Point — P Block Atrium") }}
                 {% if form.venue.errors %}
                   <div class="invalid-feedback d-block">{{ form.venue.errors[0] }}</div>
                 {% endif %}
               </div>
-              <div class="col-md-4">
-                <label class="form-label">City <span style="color:var(--accent)">*</span></label>
-                {{ form.city(class="form-select") }}
+              <div class="col-md-3">
+                <label class="form-label">State / Territory <span style="color:var(--accent)">*</span></label>
+                {{ form.state(class="form-select") }}
+                {% if form.state.errors %}
+                  <div class="invalid-feedback d-block">{{ form.state.errors[0] }}</div>
+                {% endif %}
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">City / Council Area <span style="color:var(--accent)">*</span></label>
+                {{ form.city(class="form-control", placeholder="e.g. Brisbane") }}
                 {% if form.city.errors %}
                   <div class="invalid-feedback d-block">{{ form.city.errors[0] }}</div>
                 {% endif %}
               </div>
+            </div>
+            <div class="mt-3">
+              <label class="form-label">Venue Street Address <span style="color:var(--accent)">*</span></label>
+              {{ form.venue_address(class="form-control", placeholder="e.g. 2 George St, Brisbane QLD 4000") }}
+              {% if form.venue_address.errors %}
+                <div class="invalid-feedback d-block">{{ form.venue_address.errors[0] }}</div>
+              {% endif %}
             </div>
           </div>
 
@@ -165,16 +179,15 @@
               </div>
             </div>
 
-            <div class="mt-3">
+            <div id="enhancedAocFields" class="mt-3">
               <div class="mb-3">
                 <label class="form-label">Country / Nation Name</label>
                 {{ form.aoc_country_name(class="form-control", placeholder="e.g. Turrbal and Yuggera Country") }}
-                <div class="form-text">Required for Enhanced option.</div>
               </div>
               <div class="mb-3">
                 <label class="form-label">Custom Acknowledgement Text</label>
                 {{ form.aoc_custom_text(class="form-control", rows=4, placeholder="Write your acknowledgement here…") }}
-                <div class="form-text">Required for Enhanced option. Be specific, respectful, and avoid tokenism.</div>
+                <div class="form-text">Be specific, respectful, and avoid tokenism.</div>
               </div>
             </div>
           </div>

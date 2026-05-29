@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Book Tickets — {{ event.title }}{% endblock %}
+{% block title %}Book &mdash; {{ event.title }}{% endblock %}
 
 {% block header %}
 <div class="bg-white border-bottom py-2">
@@ -21,52 +21,51 @@
 {% endblock %}
 
 {% block content %}
-<main class="py-5">
+<main class="py-4 py-md-5">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-6 col-xl-5">
+      <div class="col-lg-6 col-md-8">
 
-        <div class="form-card mb-4">
-          <div class="d-flex align-items-start gap-3 mb-4 pb-3" style="border-bottom:1px solid var(--border);">
+        <div class="info-card mb-4">
+          <div class="d-flex align-items-start gap-3">
             <img src="{{ url_for('static', filename='img/' + event.image) }}" alt="{{ event.title }}"
               style="width:72px; height:72px; object-fit:cover; border-radius:6px; flex-shrink:0;">
             <div>
-              <div style="font-family:'DM Serif Display',serif; font-size:1rem;">{{ event.title }}</div>
+              <div style="font-family:'DM Serif Display',serif; font-size:1.05rem;">{{ event.title }}</div>
               <div style="font-size:0.8rem; color:var(--ink-soft);">
-                {{ event.date.strftime('%a %d %b %Y') }} &middot; {{ event.date.strftime('%I:%M %p') }}
+                {{ event.date.strftime('%a %-d %b %Y') }} &middot;
+                {{ event.date.strftime('%-I:%M %p') }} &middot;
+                {{ event.venue }}, {{ event.city }}
               </div>
-              <div style="font-size:0.8rem; color:var(--ink-soft);">{{ event.venue }}, {{ event.city }}</div>
+              <span class="status-badge open mt-1" style="position:static;">{{ event.status }}</span>
+            </div>
+          </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('main.book_event', id=event.id) }}">
+          {{ form.hidden_tag() }}
+
+          <div class="form-card mb-4">
+            <div class="form-section-title">Tickets</div>
+            <div class="mb-3">
+              <label class="form-label">Number of Tickets</label>
+              {{ form.quantity(class="form-control", style="max-width:120px;") }}
+              {% if form.quantity.errors %}
+              <div class="invalid-feedback d-block">{{ form.quantity.errors[0] }}</div>
+              {% endif %}
+              <div class="form-text">Maximum 5 per booking. {{ event.tickets_remaining }} remaining.</div>
+            </div>
+            <div class="info-card-label">Price per ticket</div>
+            <div style="font-family:'DM Serif Display',serif; font-size:1.4rem; color:var(--accent);">
+              {% if event.ticket_price == 0 %}Free{% else %}${{ '%.2f'|format(event.ticket_price) }}{% endif %}
             </div>
           </div>
 
-          <form method="POST" action="{{ url_for('main.book_event', id=event.id) }}">
-            {{ form.hidden_tag() }}
-
-            <div class="mb-3">
-              <label class="form-label">
-                Number of Tickets <span style="color:var(--accent)">*</span>
-              </label>
-              {{ form.quantity(class="form-control", style="max-width:120px;") }}
-              {% if form.quantity.errors %}
-                <div class="invalid-feedback d-block">{{ form.quantity.errors[0] }}</div>
-              {% endif %}
-              <div class="form-text">
-                Maximum 5 per booking &mdash; {{ event.tickets_remaining }} remaining.
-              </div>
-            </div>
-
-            <div class="pt-3" style="border-top:1px solid var(--border);">
-              <div class="info-card-label mb-1">Ticket Price</div>
-              <div style="font-family:'DM Serif Display',serif; font-size:1.4rem; color:var(--accent); margin-bottom:1.25rem;">
-                {% if event.ticket_price == 0 %}Free{% else %}${{ '%.2f'|format(event.ticket_price) }} per ticket{% endif %}
-              </div>
-              <div class="d-flex gap-2">
-                <a href="{{ url_for('main.event_detail', id=event.id) }}" class="btn btn-outline-secondary px-4">Cancel</a>
-                {{ form.submit(class="btn btn-accent px-5 py-2", style="font-size:0.95rem; border-radius:5px;") }}
-              </div>
-            </div>
-          </form>
-        </div>
+          <div class="d-flex gap-3 justify-content-end">
+            <a href="{{ url_for('main.event_detail', id=event.id) }}" class="btn btn-outline-secondary px-4">Cancel</a>
+            {{ form.submit(class="btn btn-accent px-5 py-2", style="font-size:0.95rem; border-radius:5px;") }}
+          </div>
+        </form>
 
       </div>
     </div>

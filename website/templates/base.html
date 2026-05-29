@@ -59,7 +59,8 @@
             <span class="btn-outline-light-custom" style="cursor:default;">{{ current_user.first_name }}</span>
             <a href="{{ url_for('auth.logout') }}" class="btn-accent">Sign Out</a>
           {% else %}
-            <a href="{{ url_for('auth.login') }}" class="btn-accent">Sign In</a>
+            <a href="{{ url_for('auth.register', next=request.path) }}" class="btn-outline-light-custom">Register</a>
+            <a href="{{ url_for('auth.login', next=request.path) }}" class="btn-accent">Sign In</a>
           {% endif %}
         </div>
       </div>
