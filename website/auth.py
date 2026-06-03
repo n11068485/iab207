@@ -23,7 +23,7 @@ def login():
         if error is None:
             login_user(user)
             nextp = request.args.get('next')
-            if nextp is None or not nextp.startswith('/'):
+            if nextp is None or not nextp.startswith('/') or nextp in ('/login', '/register'):
                 return redirect(url_for('main.index'))
             return redirect(nextp)
         else:

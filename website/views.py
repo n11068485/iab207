@@ -46,7 +46,10 @@ def index():
     if sector:
         query = query.where(Event.sector == sector)
     if search:
-        query = query.where(Event.title.ilike(f'%{search}%'))
+        query = query.where(
+            db.or_(Event.title.ilike(f'%{search}%'),
+                   Event.description.ilike(f'%{search}%'))
+        )
 
     events  = db.session.scalars(query).all()
     sectors = sorted(set(db.session.scalars(db.select(Event.sector)).all()))

@@ -310,7 +310,8 @@ body {
   border-bottom: 3px solid var(--accent);
 }
 
-.page-header h1 {
+.page-header h1,
+.page-header h4 {
   font-family: 'DM Serif Display', serif;
   color: #fff;
   font-size: clamp(1.5rem, 3vw, 2.2rem);
