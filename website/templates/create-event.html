@@ -137,59 +137,217 @@
 
           <div class="form-card mb-4">
             <div class="form-section-title">Acknowledgement of Country</div>
-            <p style="font-size:0.875rem; color:var(--ink-soft);">
-              Select the level of Acknowledgement of Country to be displayed on your event page.
-            </p>
-            <div class="row g-3">
-              <div class="col-md-4">
-                <div class="p-3 rounded border h-100" style="border-color:var(--border) !important; cursor:pointer;">
-                  <div class="form-check mb-0">
-                    <input class="form-check-input" type="radio" name="aoc_level" id="aocNone" value="none"
-                      {% if not form.aoc_level.data or form.aoc_level.data == 'none' %}checked{% endif %}>
-                    <label class="form-check-label w-100" for="aocNone">
-                      <strong>None</strong>
-                      <div style="font-size:0.78rem; color:var(--ink-soft); margin-top:4px;">No acknowledgement displayed.</div>
-                    </label>
+
+            <!-- Expandable explainer (Bootstrap collapse) -->
+            <div class="mb-3">
+              <button type="button" class="aoc-info-btn" data-bs-toggle="collapse" data-bs-target="#aocInfoPanel" aria-expanded="false" aria-controls="aocInfoPanel">
+                <i class="bi bi-info-circle"></i> What is an Acknowledgement of Country &amp; why does it matter?
+              </button>
+              <div class="collapse" id="aocInfoPanel">
+                <div class="aoc-info-body">
+                  <div class="row g-4">
+                    <div class="col-md-6">
+                      <div class="aoc-sub-heading">Acknowledgement of Country</div>
+                      <p>An Acknowledgement of Country is a statement that recognises the ongoing connection Aboriginal and Torres Strait Islander peoples have to their traditional lands, waters and communities. It is typically made at the start of a meeting, event, or gathering and can be delivered by <em>anyone</em> — Indigenous or non-Indigenous.</p>
+                      <p>An Acknowledgement is a genuine act of respect that contributes to reconciliation. It signals that your event recognises the First Peoples of Australia as the original and ongoing Custodians of the land — custodians of one of the world's oldest continuous living cultures.</p>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="aoc-sub-heading">Welcome to Country — what's the difference?</div>
+                      <p>A <strong>Welcome to Country</strong> is a formal ceremony that can <em>only</em> be performed by an authorised Traditional Custodian (or their representative) of the specific land where the event is held. It grants permission for visitors to be on Country.</p>
+                      <p>The two are <strong>not interchangeable</strong>. If a Welcome to Country is performed by an authorised Custodian, a separate Acknowledgement is not required — but an Acknowledgement alone can never replace a Welcome to Country.</p>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="p-3 rounded border h-100" style="border-color:var(--border) !important; cursor:pointer;">
-                  <div class="form-check mb-0">
-                    <input class="form-check-input" type="radio" name="aoc_level" id="aocGeneric" value="generic"
-                      {% if form.aoc_level.data == 'generic' %}checked{% endif %}>
-                    <label class="form-check-label w-100" for="aocGeneric">
-                      <strong>Generic</strong>
-                      <div style="font-size:0.78rem; color:var(--ink-soft); margin-top:4px;">Standard acknowledgement of Traditional Custodians.</div>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="p-3 rounded border h-100" style="border-color:var(--border) !important; cursor:pointer;">
-                  <div class="form-check mb-0">
-                    <input class="form-check-input" type="radio" name="aoc_level" id="aocEnhanced" value="enhanced"
-                      {% if form.aoc_level.data == 'enhanced' %}checked{% endif %}>
-                    <label class="form-check-label w-100" for="aocEnhanced">
-                      <strong>Enhanced</strong>
-                      <div style="font-size:0.78rem; color:var(--ink-soft); margin-top:4px;">Named Country and specific community acknowledgement.</div>
-                    </label>
+                  <div class="aoc-why-box mt-3">
+                    <strong>Why it matters:</strong> Australia's First Nations peoples hold the longest continuing cultures in human history. Acknowledging Country at public events is one step toward genuine reconciliation — recognising prior and ongoing sovereignty, and building a more respectful and equitable society.
                   </div>
                 </div>
               </div>
             </div>
 
-            <div id="enhancedAocFields" class="mt-3">
-              <div class="mb-3">
-                <label class="form-label">Country / Nation Name</label>
-                {{ form.aoc_country_name(class="form-control", placeholder="e.g. Turrbal and Yuggera Country") }}
+            <!-- level selector: radio inputs must be direct siblings of the panels so the CSS :checked ~ combinator can show/hide them without JS -->
+            <p style="font-size:0.82rem; color:var(--ink-soft); margin-bottom:0.85rem;">
+              Select the type of Acknowledgement of Country to display on your event page.
+            </p>
+
+            <div class="aoc-selector">
+              <!-- visually hidden radios — rendered manually (not via {{ form.aoc_level }}) so they can sit as direct siblings of the panels; WTForms still reads name="aoc_level" from request.form on POST -->
+              <input type="radio" name="aoc_level" id="aocNone" value="none"
+                {# not form.aoc_level.data covers a fresh GET (data is None) — default to none #}
+                {% if not form.aoc_level.data or form.aoc_level.data == 'none' %}checked{% endif %}>
+              <input type="radio" name="aoc_level" id="aocGeneric" value="generic"
+                {% if form.aoc_level.data == 'generic' %}checked{% endif %}>
+              <input type="radio" name="aoc_level" id="aocEnhanced" value="enhanced"
+                {% if form.aoc_level.data == 'enhanced' %}checked{% endif %}>
+
+              <!-- visual card labels — <label for="..."> ties each card to its hidden radio so clicking anywhere on the card checks it -->
+              <div class="row g-3 aoc-cards-row">
+                <div class="col-md-4">
+                  <label for="aocNone" class="aoc-level-card aoc-card-none">
+                    <strong>None</strong>
+                    <div class="aoc-card-desc">No acknowledgement displayed on the event page.</div>
+                  </label>
+                </div>
+                <div class="col-md-4">
+                  <label for="aocGeneric" class="aoc-level-card aoc-card-generic">
+                    <strong>Generic</strong>
+                    <div class="aoc-card-desc">Standard acknowledgement of Traditional Custodians without naming a specific Country.</div>
+                  </label>
+                </div>
+                <div class="col-md-4">
+                  <label for="aocEnhanced" class="aoc-level-card aoc-card-enhanced">
+                    <strong>Enhanced</strong>
+                    <div class="aoc-card-desc">Named Country, specific peoples, and a personalised acknowledgement written by you.</div>
+                  </label>
+                </div>
               </div>
-              <div class="mb-3">
-                <label class="form-label">Custom Acknowledgement Text</label>
-                {{ form.aoc_custom_text(class="form-control", rows=4, placeholder="Write your acknowledgement here…") }}
-                <div class="form-text">Be specific, respectful, and avoid tokenism.</div>
+
+              <!-- generic panel: display:none by default; #aocGeneric:checked ~ .aoc-generic-panel overrides to display:block -->
+              <div class="aoc-generic-panel mt-3">
+                <div class="aoc-preview-box">
+                  <div class="aoc-preview-label"><i class="bi bi-eye me-1"></i>Preview — how this will appear on your event page</div>
+                  <div class="aoc-preview-text">We acknowledge the Traditional Custodians of the lands on which this event is held, and pay our respects to Elders past, present and emerging.</div>
+                </div>
               </div>
-            </div>
+
+              <!-- enhanced panel: display:none by default; #aocEnhanced:checked ~ .aoc-enhanced-panel overrides to display:block -->
+              <div class="aoc-enhanced-panel mt-3">
+
+                <!-- Capital cities quick reference -->
+                <div class="aoc-resource-card mb-3">
+                  <div class="aoc-resource-header">
+                    <i class="bi bi-geo-alt-fill me-2"></i>Traditional Custodians of Australia's Capital Cities
+                  </div>
+                  <div class="aoc-resource-body">
+                    <div class="table-responsive">
+                      <table class="table table-sm aoc-cities-table mb-1">
+                        <thead>
+                          <tr>
+                            <th>Capital City</th>
+                            <th>Traditional Custodians</th>
+                            <th>Country Name</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Brisbane (QLD)</td><td>Turrbal and Yuggera peoples</td><td>Turrbal and Yuggera Country</td></tr>
+                          <tr><td>Sydney (NSW)</td><td>Gadigal people of the Eora Nation</td><td>Gadigal Country</td></tr>
+                          <tr><td>Melbourne (VIC)</td><td>Wurundjeri Woi Wurrung and Bunurong/Boon Wurrung peoples of the Kulin Nation</td><td>Naarm / Kulin Country</td></tr>
+                          <tr><td>Perth (WA)</td><td>Whadjuk Noongar people</td><td>Whadjuk Noongar Country</td></tr>
+                          <tr><td>Adelaide (SA)</td><td>Kaurna people of the Adelaide Plains</td><td>Kaurna Country</td></tr>
+                          <tr><td>Canberra (ACT)</td><td>Ngunnawal and Ngambri peoples</td><td>Ngunnawal and Ngambri Country</td></tr>
+                          <tr><td>Darwin (NT)</td><td>Larrakia (Saltwater) people</td><td>Larrakia Country</td></tr>
+                          <tr><td>Hobart (TAS)</td><td>Muwinina people (palawa)</td><td>Muwinina Country</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="aoc-note">
+                      <i class="bi bi-info-circle me-1"></i>
+                      Country boundaries are complex — many areas have multiple overlapping Custodian groups. Always verify using the authoritative sources below for locations not listed here.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Authoritative resources -->
+                <div class="aoc-resource-card mb-3">
+                  <div class="aoc-resource-header">
+                    <i class="bi bi-book me-2"></i>Authoritative Resources for Identifying Traditional Custodians
+                  </div>
+                  <div class="aoc-resource-body">
+                    <ul class="aoc-resource-list">
+                      <li>
+                        <strong>AIATSIS Map of Indigenous Australia</strong> — The most comprehensive publicly available map of First Nations language groups and Country boundaries.
+                        <br><span class="aoc-resource-url">aiatsis.gov.au/explore/map-indigenous-australia</span>
+                      </li>
+                      <li>
+                        <strong>Reconciliation Australia — Acknowledgement of Country</strong> — Official guidance from Australia's peak reconciliation body, including sample wordings and best-practice advice.
+                        <br><span class="aoc-resource-url">reconciliation.org.au/our-work/education/acknowledgement-of-country</span>
+                      </li>
+                      <li>
+                        <strong>Australian Institute of Aboriginal and Torres Strait Islander Studies (AIATSIS)</strong> — The national institution preserving and promoting First Nations culture, history and heritage.
+                        <br><span class="aoc-resource-url">aiatsis.gov.au</span>
+                      </li>
+                      <li>
+                        <strong>First Languages Australia</strong> — Supports maintenance and revival of First Nations languages; useful for understanding Country and nation names.
+                        <br><span class="aoc-resource-url">firstlanguages.org.au</span>
+                      </li>
+                      <li>
+                        <strong>State and Territory Government Protocols</strong> — Each government publishes Acknowledgement of Country protocols reflecting local knowledge and community preferences. Search "[your state] government Acknowledgement of Country protocol".
+                      </li>
+                    </ul>
+                    <div class="aoc-tip-box">
+                      <i class="bi bi-star-fill me-2" style="color:var(--accent);"></i>
+                      <strong>Best practice:</strong> Where possible, contact the local Land Council or Aboriginal Community Controlled Organisation directly to confirm the correct name and preferred wording for your location.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Common mistakes and contested issues -->
+                <div class="aoc-warning-card mb-3">
+                  <div class="aoc-warning-header">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>Common Mistakes and Contested Issues to Be Aware Of
+                  </div>
+                  <div class="aoc-resource-body">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <ul class="aoc-mistake-list">
+                          <li><strong>Tokenism:</strong> Reciting an acknowledgement quickly and insincerely — just for form's sake — is disrespectful and undermines the practice. Deliver it meaningfully.</li>
+                          <li><strong>Wrong Country name:</strong> Using the incorrect Nation or Country name for your event location is a significant error. Always verify before publishing.</li>
+                          <li><strong>Confusing AoC with Welcome to Country:</strong> Only an authorised Traditional Custodian can perform a Welcome to Country. An Acknowledgement is not a substitute.</li>
+                          <li><strong>Vague language:</strong> Referring only to "the Traditional Custodians" without naming them is considered insufficient for an enhanced acknowledgement.</li>
+                        </ul>
+                      </div>
+                      <div class="col-md-6">
+                        <ul class="aoc-mistake-list">
+                          <li><strong>Contested phrasing:</strong> Phrases such as "sovereignty was never ceded" are politically significant — use them only with genuine understanding and intent, not as a slogan.</li>
+                          <li><strong>Mispronunciation:</strong> Take the time to learn correct pronunciation of Country and peoples' names before delivering publicly.</li>
+                          <li><strong>Overlooking multiple groups:</strong> Many locations have multiple overlapping Custodian groups — acknowledge all relevant peoples, not just one.</li>
+                          <li><strong>Copy-pasting without thought:</strong> Copying another event's acknowledgement without checking its accuracy for your specific location can result in errors.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Country name input -->
+                <div class="mb-3">
+                  <label class="form-label">Country / Nation Name</label>
+                  {{ form.aoc_country_name(class="form-control", placeholder="e.g. Turrbal and Yuggera Country") }}
+                  <div class="form-text">Enter the name of the Country on which your event is held. Use the capital cities table or authoritative resources above to verify.</div>
+                </div>
+
+                <!-- sample wordings: static reference only — no JS means we can't auto-fill the textarea, so these are shown as copy-and-adapt examples -->
+                <div class="mb-3">
+                  <button type="button" class="aoc-info-btn" data-bs-toggle="collapse" data-bs-target="#aocSampleWordings" aria-expanded="false" aria-controls="aocSampleWordings">
+                    <i class="bi bi-file-text me-1"></i> Sample wordings to guide your acknowledgement
+                  </button>
+                  <div class="collapse" id="aocSampleWordings">
+                    <div class="aoc-info-body mt-2">
+                      <p style="font-size:0.8rem; color:var(--ink-soft); margin-bottom:0.75rem;">
+                        The following are starting-point examples. Replace <em>[Country Name]</em> with the verified Country name for your event location, replace <em>[Event Name]</em> with your event title, and personalise further to reflect genuine respect. A meaningful acknowledgement is one you have thought about — not simply copied.
+                      </p>
+                      <div class="aoc-sub-heading mb-1">Standard</div>
+                      <blockquote class="aoc-sample-quote">
+                        We acknowledge the <em>[Country Name]</em> peoples as the Traditional Custodians of the land on which <em>[Event Name]</em> is being held. We pay our respects to their Elders past, present and emerging.
+                      </blockquote>
+                      <div class="aoc-sub-heading mb-1 mt-3">Extended</div>
+                      <blockquote class="aoc-sample-quote">
+                        We acknowledge the <em>[Country Name]</em> peoples as the Traditional Custodians of <em>[Country Name]</em>, upon which <em>[Event Name]</em> is held. We pay our deepest respects to Elders past, present and emerging, and to all Aboriginal and Torres Strait Islander peoples present. We recognise the enduring connection of First Nations peoples to land, waters and community — a connection that has never been broken.
+                      </blockquote>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Custom acknowledgement text -->
+                <div class="mb-3">
+                  <label class="form-label">Your Acknowledgement Text <span style="color:var(--accent)">*</span></label>
+                  {{ form.aoc_custom_text(class="form-control", rows=5, placeholder="Write your Acknowledgement of Country here. Use the sample wordings above as a guide, then personalise to reflect genuine respect for the Traditional Custodians of this land.") }}
+                  {% if form.aoc_custom_text.errors %}
+                    <div class="invalid-feedback d-block">{{ form.aoc_custom_text.errors[0] }}</div>
+                  {% endif %}
+                  <div class="form-text">Be specific, respectful, and avoid tokenism. Ensure the Country name matches your event's location.</div>
+                </div>
+
+              </div><!-- /.aoc-enhanced-panel -->
+            </div><!-- /.aoc-selector -->
           </div>
 
           <div class="d-flex flex-column flex-sm-row gap-3 justify-content-end">

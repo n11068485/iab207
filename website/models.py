@@ -2,6 +2,7 @@ from . import db
 from datetime import datetime
 from flask_login import UserMixin
 
+# table wipe sans examples: git restore instance/sitedata.sqlite
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'

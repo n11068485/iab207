@@ -1,6 +1,6 @@
 /* =====================================================
    NexusNet — main stylesheet
-   last touched: who knows. probably late.
+   last touched: sebastian
    ===================================================== */
 
 :root {
@@ -545,3 +545,314 @@ body {
   line-height: 1.5;
 }
 .aoc-banner strong { color: #fff; }
+
+
+/* --------------------------------------------------
+   acknowledgement of country — create-event form
+   -------------------------------------------------- */
+
+.aoc-info-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.aoc-info-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.aoc-info-body {
+  background: #f9f7f3;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+.aoc-info-body p { margin-bottom: 0.65rem; }
+.aoc-info-body p:last-child { margin-bottom: 0; }
+
+.aoc-sub-heading {
+  font-family: 'DM Serif Display', serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.aoc-why-box {
+  background: rgba(200,75,49,0.07);
+  border-left: 3px solid var(--accent);
+  padding: 0.65rem 1rem;
+  border-radius: 0 5px 5px 0;
+  font-size: 0.82rem;
+}
+
+/* resource & warning cards inside enhanced section */
+.aoc-resource-card,
+.aoc-warning-card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.aoc-resource-header {
+  background: #f0ede6;
+  padding: 0.6rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+}
+
+.aoc-warning-header {
+  background: #fff4e5;
+  padding: 0.6rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #7a4800;
+  display: flex;
+  align-items: center;
+}
+
+.aoc-resource-body {
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+}
+
+.aoc-cities-table {
+  font-size: 0.82rem;
+  margin-bottom: 0.75rem;
+}
+.aoc-cities-table thead th {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ink-soft);
+  background: #f9f7f3;
+  border-bottom: 2px solid var(--border);
+}
+.aoc-cities-table tbody tr:hover { background: #faf8f4; }
+
+.aoc-note {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin-bottom: 0;
+  margin-top: 0.5rem;
+}
+
+.aoc-resource-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.aoc-resource-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.875rem;
+}
+.aoc-resource-list li:last-child { border-bottom: none; }
+
+.aoc-resource-url {
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-family: monospace;
+}
+
+.aoc-tip-box {
+  background: rgba(200,75,49,0.06);
+  border-left: 3px solid var(--accent);
+  padding: 0.55rem 0.9rem;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.82rem;
+  margin-top: 0.75rem;
+}
+
+.aoc-mistake-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.aoc-mistake-list li {
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82rem;
+  padding-left: 1.1rem;
+  position: relative;
+}
+.aoc-mistake-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #c47a00;
+}
+.aoc-mistake-list li:last-child { border-bottom: none; }
+
+.aoc-suggest-box {
+  background: #fffbf0;
+  border: 1px solid #f0c060;
+  border-radius: 5px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* Level selector — CSS :checked ~ approach (no JS required) */
+
+.aoc-selector > input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.aoc-level-card {
+  display: block;
+  padding: 0.85rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  height: 100%;
+  font-size: 0.875rem;
+  color: var(--ink);
+  margin: 0;
+}
+.aoc-level-card:hover { border-color: var(--ink-soft); }
+.aoc-card-desc {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+#aocNone:checked   ~ .aoc-cards-row .aoc-card-none,
+#aocGeneric:checked ~ .aoc-cards-row .aoc-card-generic,
+#aocEnhanced:checked ~ .aoc-cards-row .aoc-card-enhanced {
+  border-color: var(--accent);
+  background: rgba(200, 75, 49, 0.04);
+}
+
+.aoc-generic-panel,
+.aoc-enhanced-panel { display: none; }
+
+#aocGeneric:checked  ~ .aoc-generic-panel  { display: block; }
+#aocEnhanced:checked ~ .aoc-enhanced-panel { display: block; }
+
+.aoc-sample-quote {
+  background: #f9f7f3;
+  border-left: 3px solid var(--border);
+  border-radius: 0 5px 5px 0;
+  padding: 0.65rem 1rem;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin: 0;
+}
+.aoc-sample-quote em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 600;
+}
+
+.aoc-preview-box {
+  background: #2e2b45;
+  color: rgba(255,255,255,0.88);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin-top: 0.75rem;
+}
+.aoc-preview-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 0.5rem;
+}
+.aoc-preview-text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+
+/* --------------------------------------------------
+   acknowledgement of country — event detail display
+   -------------------------------------------------- */
+
+.aoc-section {
+  background: #2e2b45;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.aoc-section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 0.35rem;
+}
+
+.aoc-section-country {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.15rem;
+  color: #fff;
+  margin-bottom: 0.35rem;
+}
+
+.aoc-section-text {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+.aoc-what-is-btn {
+  background: none;
+  border: none;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.45);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 0.65rem;
+  display: inline-block;
+}
+.aoc-what-is-btn:hover { color: rgba(255,255,255,0.75); }
+
+.aoc-what-is-body {
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.6;
+}
+.aoc-what-is-body strong { color: rgba(255,255,255,0.85); }

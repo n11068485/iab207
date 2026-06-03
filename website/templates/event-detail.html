@@ -4,15 +4,20 @@
 
 {% block aoc_banner %}
 {% if event.aoc_level == 'none' %}
-{{ super() }}
+  {# event opted out — fall back to the site-wide generic banner in base.html so NexusNet's own acknowledgement is still shown #}
+  {{ super() }}
 {% elif event.aoc_level == 'generic' %}
 <div class="aoc-banner">
-  <strong>Acknowledgement of Country:</strong> This event is held on the lands of the Traditional Custodians.
-  The organisers pay respect to Elders past, present and emerging.
+  <strong>Acknowledgement of Country:</strong>
+  We acknowledge the Traditional Custodians of the lands on which this event is held,
+  and pay our respects to Elders past, present and emerging.
 </div>
 {% else %}
 <div class="aoc-banner">
-  <strong>Acknowledgement of Country:</strong> {{ event.aoc_custom_text }}
+  {# aoc_country_name is nullable — guard prevents rendering "acknowledgement of country —:" when the field was left blank #}
+  <strong>Acknowledgement of Country
+  {% if event.aoc_country_name %}&mdash; {{ event.aoc_country_name }}{% endif %}:</strong>
+  {{ event.aoc_custom_text }}
 </div>
 {% endif %}
 {% endblock %}
@@ -77,6 +82,31 @@
         {% for para in event.description.split('\n\n') %}
         <p>{{ para }}</p>
         {% endfor %}
+
+        {% if event.aoc_level != 'none' %}
+        <div class="aoc-section">
+          <div class="aoc-section-label">Acknowledgement of Country</div>
+          {% if event.aoc_level == 'enhanced' %}
+            {% if event.aoc_country_name %}
+            <div class="aoc-section-country">{{ event.aoc_country_name }}</div>
+            {% endif %}
+            <p class="aoc-section-text">{{ event.aoc_custom_text }}</p>
+          {% else %}
+            {# generic level stores no custom text — use the same fixed wording as the top banner #}
+            <p class="aoc-section-text">We acknowledge the Traditional Custodians of the lands on which this event is held, and pay our respects to Elders past, present and emerging.</p>
+          {% endif %}
+          <button type="button" class="aoc-what-is-btn" data-bs-toggle="collapse" data-bs-target="#aocDetailInfo" aria-expanded="false">
+            What is an Acknowledgement of Country?
+          </button>
+          <div class="collapse" id="aocDetailInfo">
+            <div class="aoc-what-is-body">
+              <p>An <strong>Acknowledgement of Country</strong> is a statement that recognises the ongoing connection Aboriginal and Torres Strait Islander peoples have to their traditional lands, waters and communities. It is delivered at the start of a gathering as a genuine act of respect and a step toward reconciliation.</p>
+              <p>It is distinct from a <strong>Welcome to Country</strong>, which is a formal ceremony that can only be performed by an authorised Traditional Custodian of the specific land. An Acknowledgement can be made by anyone — Indigenous or non-Indigenous.</p>
+              <p>Australia's First Nations peoples hold the longest continuing cultures in human history. Acknowledging Country at public events recognises this history and supports the ongoing work of reconciliation.</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
 
         <hr class="my-4">
 
