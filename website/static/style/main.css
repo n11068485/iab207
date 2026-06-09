@@ -123,6 +123,8 @@ body {
   margin-bottom: 1rem;
 }
 
+.error-number { color: var(--accent); }
+
 .hero-sub {
   color: rgba(255,255,255,0.65);
   font-size: 1rem;
