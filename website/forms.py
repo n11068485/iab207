@@ -44,11 +44,20 @@ class EventForm(FlaskForm):
                                   validators=[InputRequired()])
     venue = StringField('Venue Name', validators=[
         InputRequired(), Length(max=200)])
-    city = SelectField('City', choices=[
-        ('Brisbane', 'Brisbane'), ('Sydney', 'Sydney'),
-        ('Melbourne', 'Melbourne'), ('Perth', 'Perth'),
-        ('Adelaide', 'Adelaide'), ('Canberra', 'Canberra'),
-        ('Hobart', 'Hobart'), ('Darwin', 'Darwin'), ('Other', 'Other')])
+    venue_address = StringField('Venue Street Address', validators=[
+        InputRequired(), Length(max=300)])
+    state = SelectField('State / Territory', choices=[
+        ('Queensland', 'Queensland'),
+        ('New South Wales', 'New South Wales'),
+        ('Victoria', 'Victoria'),
+        ('Western Australia', 'Western Australia'),
+        ('South Australia', 'South Australia'),
+        ('Australian Capital Territory', 'Australian Capital Territory'),
+        ('Tasmania', 'Tasmania'),
+        ('Northern Territory', 'Northern Territory'),
+    ], validators=[InputRequired()])
+    city = StringField('City / Council Area', validators=[
+        InputRequired(), Length(max=100)])
     sector = SelectField('Sector', choices=[
         ('Technology', 'Technology'), ('Finance & Banking', 'Finance & Banking'),
         ('Engineering', 'Engineering'), ('Healthcare', 'Healthcare'),

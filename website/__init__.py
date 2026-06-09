@@ -1,10 +1,12 @@
 # import flask - from 'package' import 'Class'
-from flask import Flask, app 
+from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect
 
 db = SQLAlchemy()
+csrf = CSRFProtect()
 
 # create a function that creates a web application
 # a web server will run this web application
@@ -18,6 +20,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sitedata.sqlite'
     # initialise db with flask app
     db.init_app(app)
+    csrf.init_app(app)
 
     Bootstrap5(app)
     
@@ -45,5 +48,14 @@ def create_app():
 
     with app.app_context():
       db.create_all()
+
+    # Custom error handlers — connects Khas's error templates to Flask
+    @app.errorhandler(404)
+    def not_found_error(error):
+        return render_template('404-error.html'), 404
+
+    @app.errorhandler(500)
+    def internal_error(error):
+        return render_template('500-error.html'), 500
 
     return app

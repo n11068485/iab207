@@ -3,13 +3,34 @@
 
 {% block title %}{{ heading }}{% endblock %}
 
+{% block header %}
+<section class="hero-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <p class="hero-eyebrow">
+          {% if heading == 'Login' %}Returning user?
+          {% elif heading == 'Register' %}Create new account
+          {% endif %}
+        </p>
+        <h1 class="hero-title">{{ heading }}</h1>
+        <p class="hero-sub">
+          {% if heading == 'Login' %}
+            Welcome back. Sign in to manage your events and bookings.
+          {% else %}
+            Create an account to discover and book professional events.
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
 {% block content %}
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <div class="page-header mb-4">
-        <h4>{{ heading }}</h4>
-      </div>
       {{ render_form(form) }}
     </div>
   </div>

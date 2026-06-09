@@ -2,6 +2,7 @@ from . import db
 from datetime import datetime
 from flask_login import UserMixin
 
+# table wipe sans examples: git restore instance/sitedata.sqlite
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -28,7 +29,9 @@ class Event(db.Model):
     date = db.Column(db.DateTime, nullable=False)
     end_time = db.Column(db.DateTime, nullable=False)
     venue = db.Column(db.String(200), nullable=False)
+    venue_address = db.Column(db.String(300), nullable=False)
     city = db.Column(db.String(100), nullable=False)
+    state = db.Column(db.String(100), nullable=False)
     sector = db.Column(db.String(100), nullable=False)
     subsector = db.Column(db.String(100), nullable=True)
     ticket_capacity = db.Column(db.Integer, nullable=False)
