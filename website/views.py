@@ -4,6 +4,7 @@ import uuid
 from datetime import datetime
 from flask import Blueprint, render_template, redirect, url_for, flash, current_app, request, abort
 from flask_login import login_required, current_user
+from sqlalchemy.exc import SQLAlchemyError
 from .models import Event, Order, Comment
 from .forms import EventForm, BookingForm, CommentForm
 from . import db
@@ -28,7 +29,10 @@ def delete_event_image(filename):
         return
     filepath = os.path.join(current_app.root_path, 'static', 'img', filename)
     if os.path.exists(filepath):
-        os.remove(filepath)
+        try:
+            os.remove(filepath)
+        except OSError:
+            pass
 
 
 @main_bp.route('/')
@@ -51,15 +55,19 @@ def index():
                    Event.description.ilike(f'%{search}%'))
         )
 
-    events  = db.session.scalars(query).all()
-    sectors = sorted(set(db.session.scalars(db.select(Event.sector)).all()))
-    states  = sorted(set(db.session.scalars(db.select(Event.state)).all()))
-    # when a state is selected the city list narrows to only cities in that state,
-    # giving a server-side cascade without javascript.
-    city_q = db.select(Event.city)
-    if state:
-        city_q = city_q.where(Event.state == state)
-    cities = sorted(set(db.session.scalars(city_q).all()))
+    try:
+        events  = db.session.scalars(query).all()
+        sectors = sorted(set(db.session.scalars(db.select(Event.sector)).all()))
+        states  = sorted(set(db.session.scalars(db.select(Event.state)).all()))
+        # when a state is selected the city list narrows to only cities in that state,
+        # giving a server-side cascade without javascript.
+        city_q = db.select(Event.city)
+        if state:
+            city_q = city_q.where(Event.state == state)
+        cities = sorted(set(db.session.scalars(city_q).all()))
+    except SQLAlchemyError:
+        flash('Unable to load events. Please try again later.', 'danger')
+        events = sectors = states = cities = []
 
     return render_template('index.html', events=events,
                            sectors=sectors, states=states, cities=cities,
@@ -80,12 +88,16 @@ def post_comment(id):
     event = db.get_or_404(Event, id)
     form = CommentForm()
     if form.validate_on_submit():
-        db.session.add(Comment(
-            text=form.text.data,
-            user_id=current_user.id,
-            event_id=event.id
-        ))
-        db.session.commit()
+        try:
+            db.session.add(Comment(
+                text=form.text.data,
+                user_id=current_user.id,
+                event_id=event.id
+            ))
+            db.session.commit()
+        except SQLAlchemyError:
+            db.session.rollback()
+            flash('Failed to post comment. Please try again.', 'danger')
     return redirect(url_for('main.event_detail', id=event.id))
 
 
@@ -124,17 +136,20 @@ def book_event(id):
             user_id=current_user.id,
             event_id=event.id
         )
-        db.session.add(order)
-        # flush assigns the db-generated id without committing, so it's
-        # available to format the order reference before the final commit.
-        db.session.flush()
-        order.order_ref = f"NXN-{now.year}-{order.id:05d}"
-
-        event.tickets_remaining -= qty
-        if event.tickets_remaining == 0:
-            event.status = 'Sold Out'
-
-        db.session.commit()
+        try:
+            db.session.add(order)
+            # flush assigns the db-generated id without committing, so it's
+            # available to format the order reference before the final commit.
+            db.session.flush()
+            order.order_ref = f"NXN-{now.year}-{order.id:05d}"
+            event.tickets_remaining -= qty
+            if event.tickets_remaining == 0:
+                event.status = 'Sold Out'
+            db.session.commit()
+        except SQLAlchemyError:
+            db.session.rollback()
+            flash('Booking failed due to a database error. Please try again.', 'danger')
+            return render_template('book-event.html', event=event, form=form)
         flash(f'Booking confirmed! Reference: {order.order_ref}', 'success')
         return redirect(url_for('main.booking_history'))
 
@@ -163,7 +178,11 @@ def create_event():
             flash('Please upload an event image.', 'danger')
             return render_template('create-event.html', form=form)
 
-        filename = save_event_image(img_file)
+        try:
+            filename = save_event_image(img_file)
+        except OSError:
+            flash('Failed to save the event image. Please try again.', 'danger')
+            return render_template('create-event.html', form=form)
 
         event = Event(
             title=form.title.data,
@@ -186,8 +205,14 @@ def create_event():
             user_id=current_user.id,
             status='Open'
         )
-        db.session.add(event)
-        db.session.commit()
+        try:
+            db.session.add(event)
+            db.session.commit()
+        except SQLAlchemyError:
+            db.session.rollback()
+            delete_event_image(filename)
+            flash('Failed to create event due to a database error. Please try again.', 'danger')
+            return render_template('create-event.html', form=form)
         flash('Event created successfully!', 'success')
         return redirect(url_for('main.event_detail', id=event.id))
 
@@ -205,10 +230,15 @@ def edit_event(id):
     if form.validate_on_submit():
         img_file = form.image.data
         if img_file and img_file.filename:
+            try:
+                new_filename = save_event_image(img_file)
+            except OSError:
+                flash('Failed to save the new image. Please try again.', 'danger')
+                return render_template('create-event.html', form=form, edit=True, event=event)
             # old image is removed before the new one is saved to prevent
             # orphaned files accumulating in static/img over repeated edits.
             delete_event_image(event.image)
-            event.image = save_event_image(img_file)
+            event.image = new_filename
 
         event.title = form.title.data
         event.description = form.description.data
@@ -226,7 +256,12 @@ def edit_event(id):
         event.aoc_country_name = form.aoc_country_name.data
         event.aoc_custom_text = form.aoc_custom_text.data
 
-        db.session.commit()
+        try:
+            db.session.commit()
+        except SQLAlchemyError:
+            db.session.rollback()
+            flash('Failed to update event due to a database error. Please try again.', 'danger')
+            return render_template('create-event.html', form=form, edit=True, event=event)
         flash('Event updated successfully!', 'success')
         return redirect(url_for('main.event_detail', id=event.id))
 
@@ -239,7 +274,12 @@ def cancel_event(id):
     event = db.get_or_404(Event, id)
     if event.user_id != current_user.id:
         abort(403)
-    event.status = 'Cancelled'
-    db.session.commit()
+    try:
+        event.status = 'Cancelled'
+        db.session.commit()
+    except SQLAlchemyError:
+        db.session.rollback()
+        flash('Failed to cancel event due to a database error. Please try again.', 'danger')
+        return redirect(url_for('main.event_detail', id=event.id))
     flash('Event cancelled.', 'success')
     return redirect(url_for('main.event_detail', id=event.id))

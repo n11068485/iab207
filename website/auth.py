@@ -1,6 +1,7 @@
 from flask import Blueprint, flash, render_template, request, url_for, redirect
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user
+from sqlalchemy.exc import SQLAlchemyError
 from .models import User
 from .forms import LoginForm, RegisterForm
 from . import db
@@ -15,7 +16,11 @@ def login():
     if login_form.validate_on_submit():
         email = login_form.email.data
         password = login_form.password.data
-        user = db.session.scalar(db.select(User).where(User.email == email))
+        try:
+            user = db.session.scalar(db.select(User).where(User.email == email))
+        except SQLAlchemyError:
+            flash('A database error occurred. Please try again.', 'danger')
+            return render_template('user.html', form=login_form, heading='Login')
         if user is None:
             error = 'No account found with that email'
         elif not check_password_hash(user.password_hash, password):
@@ -38,8 +43,12 @@ def register():
     nextp = request.args.get('next')
     register_form = RegisterForm()
     if register_form.validate_on_submit():
-        existing = db.session.scalar(
-            db.select(User).where(User.email == register_form.email.data))
+        try:
+            existing = db.session.scalar(
+                db.select(User).where(User.email == register_form.email.data))
+        except SQLAlchemyError:
+            flash('A database error occurred. Please try again.', 'danger')
+            return render_template('user.html', form=register_form, heading='Register')
         if existing:
             flash('An account with that email already exists.', 'danger')
             return render_template('user.html', form=register_form, heading='Register')
@@ -52,8 +61,13 @@ def register():
             contact_number=register_form.contact_number.data,
             street_address=register_form.street_address.data,
         )
-        db.session.add(user)
-        db.session.commit()
+        try:
+            db.session.add(user)
+            db.session.commit()
+        except SQLAlchemyError:
+            db.session.rollback()
+            flash('Registration failed due to a database error. Please try again.', 'danger')
+            return render_template('user.html', form=register_form, heading='Register')
         flash('Registration successful. Please log in.', 'success')
         if nextp and nextp.startswith('/'):
             return redirect(url_for('auth.login', next=nextp))
